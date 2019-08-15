@@ -8,6 +8,7 @@
     <artifactId>newsapp</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
+
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
         <dependency>
