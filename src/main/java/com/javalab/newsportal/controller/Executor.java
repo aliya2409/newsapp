@@ -7,7 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Executor {
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        News newsInstance = (News)context.getBean("news");
+        News newsInstance = context.getBean("news", News.class);
         System.out.printf(newsInstance.getContent());
     }
 }

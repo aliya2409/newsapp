@@ -1,4 +1,4 @@
 package com.javalab.newsportal.service;
 
-public class AddUpdateNewsService {
+public class AddUpdateNewsService implements Service {
 }

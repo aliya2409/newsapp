@@ -1,4 +1,6 @@
 package com.javalab.newsportal.dao;
 
-public class NewsDAO {
+import com.javalab.newsportal.model.News;
+
+public class NewsDAO extends AbstractDAO<News> {
 }
