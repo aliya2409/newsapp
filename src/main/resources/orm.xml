@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
+                 version="1.0">
+    <package>com.javalab.newsportal.model</package>
+    <entity class="com.javalab.newsportal.model.Publication" name="Publication" access="FIELD">
+        <table name="publication"/>
+        <inheritance strategy="JOINED"/>
+        <attributes>
+            <id name="id">
+                <generated-value strategy="SEQUENCE" generator="publication_generator"/>
+                <sequence-generator name="publication_generator" sequence-name="publication_seq" allocation-size="1" initial-value="1"/>
+            </id>
+            <basic name="creationDate">
+                <column name="cr_date"/>
+            </basic>
+            <basic name="content">
+                <column name="content"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="News" name="News">
+        <table name="news"/>
+        <named-query name="News.findByTitle">
+            <query>SELECT n FROM News n WHERE lower(n.title) LIKE :title</query>
+        </named-query>
+        <attributes>
+            <basic name="title">
+                <column name="title"/>
+            </basic>
+            <basic name="brief">
+                <column name="brief"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="Comment" name="Comment">
+        <table name="commentary"/>
+        <attributes>
+            <basic name="author">
+                <column name="author"/>
+            </basic>
+            <basic name="newsId">
+                <column name="news_id"/>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>

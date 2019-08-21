@@ -1,6 +1,8 @@
 package com.javalab.newsportal.service;
 
-public class NewsAdditionService implements Service {
+import com.javalab.newsportal.model.News;
 
+public interface NewsAdditionService {
 
+    public News add(News news);
 }

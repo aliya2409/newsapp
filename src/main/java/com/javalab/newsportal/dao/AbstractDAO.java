@@ -1,30 +1,44 @@
 package com.javalab.newsportal.dao;
 
-import com.javalab.newsportal.model.BaseEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
-public abstract class AbstractDAO<T extends BaseEntity> {
-    private Class<T> clazz;
+public abstract class AbstractDAO<T> {
+    protected Class<T> clazz;
+    private SessionFactory sessionFactory;
 
-    @Autowired
-    SessionFactory sessionFactory; //xml bean needed
+    public AbstractDAO() {
 
-    public void setClazz(Class< T > clazzToSet){
-        this.clazz = clazzToSet;
     }
 
+    public AbstractDAO(SessionFactory sessionFactory, Class<T> clazz) {
+        this.sessionFactory = sessionFactory;
+        this.clazz = clazz;
+    }
+
+    public Class<T> getClazz() {
+        return clazz;
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    @Transactional
     public T findById(long id){
         return getCurrentSession().get(clazz, id);
     }
 
-    public List findAll() {
+    @Transactional
+    public List<T> findAll() {
         return getCurrentSession().createQuery("from " + clazz.getName()).list();
     }
 
+    @Transactional
     public T create(T entity) {
         getCurrentSession().saveOrUpdate(entity);
         return entity;

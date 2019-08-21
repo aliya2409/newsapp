@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <mvc:annotation-driven />
+    <context:component-scan
+            base-package="com.javalab.newsportal" />
+    <!--<mvc:default-servlet-handler />-->
+    <context:property-placeholder location="classpath:database.properties"/>
+
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+    <bean id="news" class="com.javalab.newsportal.model.News" scope="prototype">
+    </bean>
+
+    <bean id="comment" class="com.javalab.newsportal.model.Comment" scope="prototype">
+    </bean>
+
+    <bean id="allNewsRetrievalService" class="com.javalab.newsportal.service.AllNewsRetrievalServiceImpl">
+        <constructor-arg name="newsDAO" ref="newsDAO"/>
+    </bean>
+
+    <bean id="newsDAO"
+          class="com.javalab.newsportal.dao.NewsDAO">
+        <constructor-arg name="sessionFactory" ref="sessionFactory"/>
+        <constructor-arg name="clazz" value="com.javalab.newsportal.model.News" />
+    </bean>
+
+    <!-- Oracle DataSource -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${oracle.driver}" />
+        <property name="url" value="${oracle.url}" />
+        <property name="username" value="${oracle.user}" />
+        <property name="password" value="${oracle.password}" />
+    </bean>
+
+    <!-- Hibernate SessionFactory -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan" value="com.javalab.newsportal.model" />
+        <property name="mappingResources" value="orm.xml"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${oracle.dialect}</prop>
+                <!--<prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</prop>-->
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="txManager"
+          class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <tx:annotation-driven transaction-manager="txManager"/>
+</beans>

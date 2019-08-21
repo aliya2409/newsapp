@@ -29,6 +29,13 @@
             <version>5.1.6.RELEASE</version>
         </dependency>
 
+        <!-- https://www.mkyong.com/maven/how-to-add-oracle-jdbc-driver-in-your-maven-local-repository/ -->
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc7</artifactId>
+            <version>12.2.0.1</version>
+        </dependency>
+
         <!-- JSTL Dependency -->
         <dependency>
             <groupId>javax.servlet.jsp.jstl</groupId>
