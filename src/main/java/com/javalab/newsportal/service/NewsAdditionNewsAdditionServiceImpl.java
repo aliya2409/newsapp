@@ -5,7 +5,11 @@ import com.javalab.newsportal.model.News;
 
 public class NewsAdditionNewsAdditionServiceImpl implements NewsAdditionService {
 
-    private NewsDAO newsDAO;
+    private final NewsDAO newsDAO;
+
+    public NewsAdditionNewsAdditionServiceImpl(NewsDAO newsDAO) {
+        this.newsDAO = newsDAO;
+    }
 
     @Override
     public News add(News news) {

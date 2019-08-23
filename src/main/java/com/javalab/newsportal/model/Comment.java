@@ -3,6 +3,9 @@ package com.javalab.newsportal.model;
 
 public class Comment extends Publication {
 
+    public static  final  String AUTHOR = "author";
+    public static  final  String NEWS_ID = "news_id";
+
     private String author;
     private Long newsId;
 

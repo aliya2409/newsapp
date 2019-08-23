@@ -4,6 +4,10 @@ import java.util.Set;
 
 public class News extends Publication {
 
+    public static  final  String TITLE = "title";
+    public static  final  String BRIEF = "brief";
+    public static  final  String COMMENTS = "comments";
+
     private String title;
     private String brief;
     private Set<Comment> comments;

@@ -12,10 +12,10 @@
                 <generated-value strategy="SEQUENCE" generator="publication_generator"/>
                 <sequence-generator name="publication_generator" sequence-name="publication_seq" allocation-size="1" initial-value="1"/>
             </id>
-            <basic name="creationDate">
+            <basic name="creationDate" optional="false">
                 <column name="cr_date"/>
             </basic>
-            <basic name="content">
+            <basic name="content" optional="false">
                 <column name="content"/>
             </basic>
         </attributes>
@@ -29,25 +29,24 @@
             <query>SELECT n.ID, n.TITLE, n.BRIEF, p.CONTENT, p.CR_DATE FROM News n JOIN Publication p ON p.id = n.id WHERE p.CR_DATE = to_date(:creationDate, 'YYYY-MM-DD hh24:mi:ss')</query>
         </named-native-query>
         <attributes>
-            <basic name="title">
+            <basic name="title" optional="false">
                 <column name="title"/>
             </basic>
-            <basic name="brief">
+            <basic name="brief" optional="false">
                 <column name="brief"/>
             </basic>
-            <one-to-many name="comments">
+            <one-to-many name="comments" target-entity="Comment">
             </one-to-many>
         </attributes>
     </entity>
     <entity class="Comment" name="Comment">
         <table name="commentary"/>
         <attributes>
-            <basic name="author">
+            <basic name="author" optional="false">
                 <column name="author"/>
             </basic>
-            <basic name="newsId">
-                <column name="news_id"/>
-            </basic>
+            <many-to-one name="newsId" optional="false" target-entity="News">
+            </many-to-one>
         </attributes>
     </entity>
 </entity-mappings>

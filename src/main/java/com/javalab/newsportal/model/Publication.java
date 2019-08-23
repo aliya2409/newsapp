@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 
 public abstract class Publication {
 
+    public static  final  String ID = "id";
+    public static  final  String CONTENT = "content";
+
     private Long id;
     private LocalDateTime creationDate;
     private String content;

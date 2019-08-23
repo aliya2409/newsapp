@@ -24,7 +24,6 @@ public class NewsDAO extends AbstractDAO<News> {
     @Transactional
     public List<News> findByDate(String date) {
         Query<News> query = getCurrentSession().createNamedQuery("News.findByDate", clazz);
-
         query.setParameter("creationDate", date);
         return query.getResultList();
     }
@@ -33,7 +32,7 @@ public class NewsDAO extends AbstractDAO<News> {
         CriteriaBuilder cb = getCurrentSession().getCriteriaBuilder();
         CriteriaQuery<News> query = cb.createQuery(clazz);
         Root<News> root = query.from(clazz);
-        query.select(root).where(cb.equal(root.get("id"), id));
+        query.select(root).where(cb.equal(root.get(News.ID), id));
         return getCurrentSession().createQuery(query).getSingleResult();
     }
 

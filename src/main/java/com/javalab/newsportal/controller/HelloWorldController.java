@@ -11,8 +11,8 @@ import java.util.List;
 
 @Controller
 public class HelloWorldController {
-    AllNewsRetrievalService allNewsRetrievalService;
-    TodayNewsRetrievalService todayNewsRetrievalService;
+    private final AllNewsRetrievalService allNewsRetrievalService;
+    private final TodayNewsRetrievalService todayNewsRetrievalService;
 
     public HelloWorldController(AllNewsRetrievalService allNewsRetrievalService, TodayNewsRetrievalService todayNewsRetrievalService) {
         this.allNewsRetrievalService = allNewsRetrievalService;

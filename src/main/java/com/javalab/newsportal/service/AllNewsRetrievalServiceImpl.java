@@ -7,7 +7,7 @@ import java.util.List;
 
 public class AllNewsRetrievalServiceImpl implements AllNewsRetrievalService {
 
-    private NewsDAO newsDAO;
+    private final NewsDAO newsDAO;
 
     public AllNewsRetrievalServiceImpl(NewsDAO newsDAO) {
         this.newsDAO = newsDAO;

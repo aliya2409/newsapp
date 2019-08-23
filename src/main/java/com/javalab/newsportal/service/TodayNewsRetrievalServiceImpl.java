@@ -2,6 +2,7 @@ package com.javalab.newsportal.service;
 
 import com.javalab.newsportal.dao.NewsDAO;
 import com.javalab.newsportal.model.News;
+import com.javalab.newsportal.util.Constants;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,8 +12,7 @@ import java.util.List;
 
 public class TodayNewsRetrievalServiceImpl implements  TodayNewsRetrievalService{
 
-    private static final String ORACLE_TIMESTAMP_PATTERN = "yyyy-MM-dd HH:mm:ss"; // where do i put constants? separate class?
-    private NewsDAO newsDAO;
+    private final NewsDAO newsDAO;
 
     public TodayNewsRetrievalServiceImpl(NewsDAO newsDAO) {
         this.newsDAO = newsDAO;
@@ -20,7 +20,7 @@ public class TodayNewsRetrievalServiceImpl implements  TodayNewsRetrievalService
 
     @Override
     public List<News> retrieveTodayNews() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ORACLE_TIMESTAMP_PATTERN);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.ORACLE_TIMESTAMP_PATTERN);
         LocalDateTime today = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
         String formattedDate = today.format(formatter);
         return newsDAO.findByDate(formattedDate);

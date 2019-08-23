@@ -21,6 +21,8 @@
     <!--<mvc:default-servlet-handler />-->
     <context:property-placeholder location="classpath:database.properties"/>
 
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/" />
@@ -59,7 +61,7 @@
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="packagesToScan" value="com.javalab.newsportal.model" />
-        <property name="mappingResources" value="orm.xml"/>
+        <property name="mappingResources" value="hibernate.orm.xml"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${oracle.dialect}</prop>
