@@ -17,14 +17,14 @@ public class NewsDAO extends AbstractDAO<News> {
     @Transactional
     public List<News> findByTitle(String title) {
         Query<News> query = getCurrentSession().createNamedQuery("News.findByTitle", clazz);
-        query.setParameter("title", "%" + title + "%");
+        query.setParameter(News.TITLE, "%" + title + "%");
         return query.getResultList();
     }
 
     @Transactional
     public List<News> findByDate(String date) {
         Query<News> query = getCurrentSession().createNamedQuery("News.findByDate", clazz);
-        query.setParameter("creationDate", date);
+        query.setParameter(News.CREATION_DATE, date);
         return query.getResultList();
     }
 
@@ -49,11 +49,11 @@ public class NewsDAO extends AbstractDAO<News> {
         CriteriaBuilder cb = getCurrentSession().getCriteriaBuilder();
         CriteriaUpdate<News> update = cb.createCriteriaUpdate(clazz);
         Root<News> root = update.from(clazz);
-        update.set("title", news.getTitle());
-        update.set("brief", news.getBrief());
-        update.set("content", news.getContent());
-        update.set("creationDate", news.getCreationDate());
-        update.where(cb.equal(root.get("id"), news.getId()));
+        update.set(News.TITLE, news.getTitle());
+        update.set(News.BRIEF, news.getBrief());
+        update.set(News.CONTENT, news.getContent());
+        update.set(News.CREATION_DATE, news.getCreationDate());
+        update.where(cb.equal(root.get(News.ID), news.getId()));
         getCurrentSession().createQuery(update).executeUpdate();
         return news;
     }
@@ -62,7 +62,7 @@ public class NewsDAO extends AbstractDAO<News> {
         CriteriaBuilder cb = getCurrentSession().getCriteriaBuilder();
         CriteriaDelete<News> delete = cb.createCriteriaDelete(clazz);
         Root root = delete.from(clazz);
-        delete.where(cb.equal(root.get("id"), news.getId()));
+        delete.where(cb.equal(root.get(News.ID), news.getId()));
         getCurrentSession().createQuery(delete).executeUpdate();
     }
 
