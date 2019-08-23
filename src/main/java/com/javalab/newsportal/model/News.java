@@ -1,12 +1,23 @@
 package com.javalab.newsportal.model;
 
+import java.util.Set;
+
 public class News extends Publication {
 
     private String title;
     private String brief;
+    private Set<Comment> comments;
 
     public News() {
         super();
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 
     public String getTitle() {

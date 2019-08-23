@@ -2,6 +2,7 @@ package com.javalab.newsportal.controller;
 
 import com.javalab.newsportal.model.News;
 import com.javalab.newsportal.service.AllNewsRetrievalService;
+import com.javalab.newsportal.service.TodayNewsRetrievalService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +12,11 @@ import java.util.List;
 @Controller
 public class HelloWorldController {
     AllNewsRetrievalService allNewsRetrievalService;
+    TodayNewsRetrievalService todayNewsRetrievalService;
 
-    public HelloWorldController(AllNewsRetrievalService allNewsRetrievalService) {
+    public HelloWorldController(AllNewsRetrievalService allNewsRetrievalService, TodayNewsRetrievalService todayNewsRetrievalService) {
         this.allNewsRetrievalService = allNewsRetrievalService;
+        this.todayNewsRetrievalService = todayNewsRetrievalService;
     }
 
     @RequestMapping("/welcome")

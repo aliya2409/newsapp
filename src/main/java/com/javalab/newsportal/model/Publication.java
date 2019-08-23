@@ -1,11 +1,11 @@
 package com.javalab.newsportal.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public abstract class Publication {
 
     private Long id;
-    private LocalDate creationDate;
+    private LocalDateTime creationDate;
     private String content;
 
 
@@ -13,11 +13,11 @@ public abstract class Publication {
         return id;
     }
 
-    public LocalDate getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDate creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 

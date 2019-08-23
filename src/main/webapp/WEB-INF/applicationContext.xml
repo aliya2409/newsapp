@@ -15,6 +15,7 @@
         http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <mvc:annotation-driven />
+    <tx:annotation-driven transaction-manager="txManager"/>
     <context:component-scan
             base-package="com.javalab.newsportal" />
     <!--<mvc:default-servlet-handler />-->
@@ -33,6 +34,10 @@
     </bean>
 
     <bean id="allNewsRetrievalService" class="com.javalab.newsportal.service.AllNewsRetrievalServiceImpl">
+        <constructor-arg name="newsDAO" ref="newsDAO"/>
+    </bean>
+
+    <bean id="todayNewsRetrievalService" class="com.javalab.newsportal.service.TodayNewsRetrievalServiceImpl">
         <constructor-arg name="newsDAO" ref="newsDAO"/>
     </bean>
 
@@ -68,5 +73,5 @@
           class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    <tx:annotation-driven transaction-manager="txManager"/>
+
 </beans>

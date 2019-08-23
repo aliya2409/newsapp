@@ -25,6 +25,9 @@
         <named-query name="News.findByTitle">
             <query>SELECT n FROM News n WHERE lower(n.title) LIKE :title</query>
         </named-query>
+        <named-native-query name="News.findByDate" result-class="News">
+            <query>SELECT n.ID, n.TITLE, n.BRIEF, p.CONTENT, p.CR_DATE FROM News n JOIN Publication p ON p.id = n.id WHERE p.CR_DATE = to_date(:creationDate, 'YYYY-MM-DD hh24:mi:ss')</query>
+        </named-native-query>
         <attributes>
             <basic name="title">
                 <column name="title"/>
@@ -32,6 +35,8 @@
             <basic name="brief">
                 <column name="brief"/>
             </basic>
+            <one-to-many name="comments">
+            </one-to-many>
         </attributes>
     </entity>
     <entity class="Comment" name="Comment">
