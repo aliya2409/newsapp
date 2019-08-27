@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <html>
 <head>
@@ -29,32 +30,28 @@
             <div class="side-nav">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="news/allnews">News List</a>
+                        <a class="nav-link" href="/allnews">News List</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="news/addNews">Add News</a>
+                        <a class="nav-link" href="/addNews">Add News</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="col-10">
-            <c:forEach items="${newsList}" var="news">
-                <div class="news-li">
-                    <h4 class="news-li__title">${news.title}</h4>
-                    <a class="news-li__date align-right">${news.creationDate}</a>
-                    <a class="news-li__brief">${news.brief}</a>
-                    <div class="news-li__buttons">
-                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="window.location.href='${news.id}'">view</button>
-                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="window.location.href='addNews?newsId=${news.id}'">edit</button>
-                        <div class="form-check form-check-inline my-checkbox">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                        </div>
-                    </div>
+            <form:form action="/news/editNews?newsId=${newsId}" method="post" modelAttribute="news" class="news-table news-table__update">
+                <form:label path="title" class="news-field__title">Title</form:label>
+                <form:label path="brief" class="news-field__brief">Brief</form:label>
+                <form:label path="content" class="news-field__content">Content</form:label>
+
+                <form:input path="title" class="news-li__title form-control"/>
+                <form:input path="brief" class="news-li__brief form-control"/>
+                <form:input path="content" class="news-li__content form-control"/>
+                <div class="info-btns">
+                    <button type="submit" class="btn btn-outline-primary">Save</button>
+                    <button type="button" class="btn btn-outline-danger">Cancel</button>
                 </div>
-            </c:forEach>
-            <div class="info-btns">
-                <button type="button" class="btn btn-outline-danger">Delete</button>
-            </div>
+            </form:form>
         </div>
     </div>
 </div>

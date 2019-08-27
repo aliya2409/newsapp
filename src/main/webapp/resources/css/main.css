@@ -1,0 +1,94 @@
+html, body {
+    height: 100%;
+}
+
+.content {
+    padding-top: 5rem;
+    min-height: 100%;
+}
+
+.side-nav {
+    position: sticky;
+    top: 30vh;
+    font-size: 1rem;
+}
+
+.news-li {
+    display: grid;
+    grid-template-columns: auto 10rem;
+    grid-template-rows: auto auto 2rem;
+    grid-template-areas: "title date" "brief ." ". buttons";
+    grid-gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.news-table {
+    display: grid;
+    grid-template-columns: 10rem auto;
+    grid-template-rows: auto 2rem auto auto;
+    grid-template-areas: "field-title title" "field-date date" "field-brief brief" "field-content content";
+    grid-gap: 0.5rem;
+}
+
+.news-table__update {
+    grid-template-rows: auto auto auto;
+    grid-template-areas: "field-title title" "field-brief brief" "field-content content";
+}
+
+.news-li__title {
+    grid-area: title;
+    margin: 0;
+    padding: 0.2rem;
+}
+
+.news-li__date {
+    grid-area: date;
+    vertical-align: middle;
+    text-decoration-line: underline;
+}
+
+.news-li__brief {
+    grid-area: brief;
+    padding: 0.2rem;
+}
+
+.news-li__buttons {
+    grid-area: buttons;
+    vertical-align: middle;
+    text-align: right;
+}
+
+.news-field__title {
+    grid-area: field-title;
+}
+
+.news-field__date {
+    grid-area: field-date;
+}
+
+.news-field__brief {
+    grid-area: field-brief;
+}
+
+.news-field__content {
+    grid-area: field-content;
+}
+
+.info-btns {
+    margin-top: 1rem;
+}
+
+.footer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    height: 4rem;
+    background-color: #f5f5f5;
+    text-align: center;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+.align-right {
+    text-align: right;
+}

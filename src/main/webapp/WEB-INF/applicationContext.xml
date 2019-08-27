@@ -39,8 +39,16 @@
         <constructor-arg name="newsDAO" ref="newsDAO"/>
     </bean>
 
+    <bean id="newsSavingService" class="com.javalab.newsportal.service.NewsSavingServiceImpl">
+        <constructor-arg name="newsDAO" ref="newsDAO"/>
+    </bean>
+
     <bean id="todayNewsRetrievalService" class="com.javalab.newsportal.service.TodayNewsRetrievalServiceImpl">
         <constructor-arg name="newsDAO" ref="newsDAO"/>
+    </bean>
+
+    <bean id="newsRetrievalService" class="com.javalab.newsportal.service.NewsRetrievalServiceImpl">
+        <constructor-arg name="newsDAO" ref="newsDAO"></constructor-arg>
     </bean>
 
     <bean id="newsDAO"

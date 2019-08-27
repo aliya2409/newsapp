@@ -11,8 +11,8 @@
         Hey You..!! This is your 1st Spring MCV Tutorial..<br> <br>
     </h2>
     <h3>
-        <a href="/welcome">Click here to See Welcome Message... </a>(to
-        check Spring MVC Controller... @RequestMapping("/welcome"))
+        <a href="/allnews">Click here to See all news </a>(to
+        check Spring MVC Controller... @RequestMapping("/allnews"))
     </h3>
 </div>
 </body>

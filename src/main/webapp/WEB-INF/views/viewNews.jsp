@@ -29,30 +29,28 @@
             <div class="side-nav">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="news/allnews">News List</a>
+                        <a class="nav-link" href="/allnews">News List</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="news/addNews">Add News</a>
+                        <a class="nav-link" href="/addNews">Add News</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="col-10">
-            <c:forEach items="${newsList}" var="news">
-                <div class="news-li">
-                    <h4 class="news-li__title">${news.title}</h4>
-                    <a class="news-li__date align-right">${news.creationDate}</a>
-                    <a class="news-li__brief">${news.brief}</a>
-                    <div class="news-li__buttons">
-                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="window.location.href='${news.id}'">view</button>
-                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="window.location.href='addNews?newsId=${news.id}'">edit</button>
-                        <div class="form-check form-check-inline my-checkbox">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                        </div>
-                    </div>
-                </div>
-            </c:forEach>
-            <div class="info-btns">
+            <div class="news-table">
+                <a class="news-field__title">Title</a>
+                <a class="news-field__date">Creation date</a>
+                <a class="news-field__brief">Brief</a>
+                <a class="news-field__content">Content</a>
+                <h6 class="news-li__title">${news.title}</h6>
+                <a class="news-li__date">${news.creationDate}</a>
+                <a class="news-li__brief">${news.brief}</a>
+                <a class="news-li__content">${news.content}</a>
+            </div>
+            <div class="btn-group info-btns" role="group">
+                <button type="button" class="btn btn-outline-primary" onclick="window.location.href='addNews?newsId=${id}'">Edit
+                </button>
                 <button type="button" class="btn btn-outline-danger">Delete</button>
             </div>
         </div>

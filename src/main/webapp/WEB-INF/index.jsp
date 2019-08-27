@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -35,6 +35,7 @@
             </ul>
         </div>
         <div class="col-8">
+            <c:forEach items="${newsList}" var="news">
             <div class="news-li">
                 <h4 class="news-li__title">${news.title}</h4>
                 <div class="news-li__date">${news.creationDate}</div>
@@ -42,6 +43,7 @@
                 <button type="button" class="btn btn-outline-primary btn-sm">view</button>
                 <button type="button" class="btn btn-outline-primary btn-sm">edit</button>
             </div>
+            </c:forEach>
         </div>
     </div>
 </div>

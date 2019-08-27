@@ -2,7 +2,7 @@ package com.javalab.newsportal.service;
 
 import com.javalab.newsportal.model.News;
 
-public interface NewsAdditionService {
+public interface NewsSavingService {
 
-    public News add(News news);
+    public News save(News news);
 }

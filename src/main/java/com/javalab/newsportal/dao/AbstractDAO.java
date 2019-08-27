@@ -38,7 +38,7 @@ public abstract class AbstractDAO<T> {
     }
 
     @Transactional
-    public T create(T entity) {
+    public T save(T entity) {
         getCurrentSession().saveOrUpdate(entity);
         return entity;
     }
