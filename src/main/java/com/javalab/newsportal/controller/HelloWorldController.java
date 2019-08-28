@@ -42,18 +42,19 @@ public class HelloWorldController {
         return "viewNews";
     }
 
-    @GetMapping("/addNews")
+    @GetMapping("/showForm")
     public String getEditForm(@RequestParam(value="newsId", required = false) Long newsId, Model model) {
-        model.addAttribute("newsId", newsId);
+        News news;
+        if(newsId != null) {
+            news = newsRetrievalService.retrieve(newsId);
+        } else {
+            news = new News();
+        }
+        model.addAttribute("news", news);
         return "editNews";
     }
 
-    @ModelAttribute("news")
-    public News getNewsObject(@RequestParam(value="newsId", required = false) Long newsId) {
-        return newsId != null ? newsRetrievalService.retrieve(newsId) : new News();
-    }
-
-    @PostMapping("/editNews")
+    @PostMapping("/saveNews")
     public String submit(@ModelAttribute("news") News news,
                          BindingResult result) {
         if (result.hasErrors()) {

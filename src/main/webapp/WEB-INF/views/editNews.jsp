@@ -33,17 +33,18 @@
                         <a class="nav-link" href="/allnews">News List</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/addNews">Add News</a>
+                        <a class="nav-link" href="/showForm">Add News</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="col-10">
-            <form:form action="/news/editNews?newsId=${newsId}" method="post" modelAttribute="news" class="news-table news-table__update">
+            <form:form action="/news/saveNews" method="post" modelAttribute="news" class="news-table news-table__update">
                 <form:label path="title" class="news-field__title">Title</form:label>
                 <form:label path="brief" class="news-field__brief">Brief</form:label>
                 <form:label path="content" class="news-field__content">Content</form:label>
-
+                <form:hidden path="id" />
+                <form:hidden path="creationDate" />
                 <form:input path="title" class="news-li__title form-control"/>
                 <form:input path="brief" class="news-li__brief form-control"/>
                 <form:input path="content" class="news-li__content form-control"/>

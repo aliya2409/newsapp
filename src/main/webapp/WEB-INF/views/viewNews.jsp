@@ -29,10 +29,10 @@
             <div class="side-nav">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="/allnews">News List</a>
+                        <a class="nav-link" href="allnews">News List</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/addNews">Add News</a>
+                        <a class="nav-link" href="showForm">Add News</a>
                     </li>
                 </ul>
             </div>
@@ -49,7 +49,7 @@
                 <a class="news-li__content">${news.content}</a>
             </div>
             <div class="btn-group info-btns" role="group">
-                <button type="button" class="btn btn-outline-primary" onclick="window.location.href='addNews?newsId=${id}'">Edit
+                <button type="button" class="btn btn-outline-primary" onclick="window.location.href='showForm?newsId=${id}'">Edit
                 </button>
                 <button type="button" class="btn btn-outline-danger">Delete</button>
             </div>

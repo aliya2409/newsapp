@@ -29,10 +29,10 @@
             <div class="side-nav">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="news/allnews">News List</a>
+                        <a class="nav-link" href="allnews">News List</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="news/addNews">Add News</a>
+                        <a class="nav-link" href="showForm">Add News</a>
                     </li>
                 </ul>
             </div>
@@ -45,7 +45,7 @@
                     <a class="news-li__brief">${news.brief}</a>
                     <div class="news-li__buttons">
                         <button type="button" class="btn btn-outline-primary btn-sm" onclick="window.location.href='${news.id}'">view</button>
-                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="window.location.href='addNews?newsId=${news.id}'">edit</button>
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="window.location.href='showForm?newsId=${news.id}'">edit</button>
                         <div class="form-check form-check-inline my-checkbox">
                             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
                         </div>

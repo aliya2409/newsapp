@@ -17,6 +17,10 @@ public abstract class Publication {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public LocalDateTime getCreationDate() {
         return creationDate;
     }
