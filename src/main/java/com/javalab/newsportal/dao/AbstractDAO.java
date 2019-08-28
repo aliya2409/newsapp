@@ -1,5 +1,6 @@
 package com.javalab.newsportal.dao;
 
+import com.javalab.newsportal.model.Publication;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -34,7 +35,7 @@ public abstract class AbstractDAO<T> {
 
     @Transactional
     public List<T> findAll() {
-        return getCurrentSession().createQuery("from " + clazz.getName()).list();
+        return getCurrentSession().createQuery("from " + clazz.getName() + " p order by p." + Publication.CREATION_DATE + " desc").list();
     }
 
     @Transactional

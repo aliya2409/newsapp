@@ -30,10 +30,10 @@
             <div class="side-nav">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="/allnews">News List</a>
+                        <a class="nav-link" href="allnews">News List</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/showForm">Add News</a>
+                        <a class="nav-link" href="showForm">Add News</a>
                     </li>
                 </ul>
             </div>
