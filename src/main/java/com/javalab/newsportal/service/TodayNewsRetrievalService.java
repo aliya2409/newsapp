@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface TodayNewsRetrievalService {
 
-    public List<News> retrieveTodayNews();
+    List<News> retrieveTodayNews();
 }

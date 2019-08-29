@@ -13,13 +13,14 @@ html, body {
     font-size: 1rem;
 }
 
-.news-li {
+.news-comment-li {
     display: grid;
     grid-template-columns: auto 10rem;
     grid-template-rows: auto auto 2rem;
     grid-template-areas: "title date" "brief ." ". buttons";
     grid-gap: 0.5rem;
     margin-bottom: 2rem;
+    margin-top: 2rem;
 }
 
 .news-table {
@@ -58,20 +59,49 @@ html, body {
     text-align: right;
 }
 
+#comments {
+    margin-top: 3rem;
+}
+
+.comment-li-author {
+    grid-area: title;
+    font-weight: bold;
+}
+
+.comment-li-date {
+    grid-area: date;
+}
+
+.comment-li-content {
+    grid-area: brief;
+}
+
+.comment-li-buttons {
+    grid-area: buttons;
+}
+
+.new_comment_form {
+    margin-top: 3rem;
+}
+
 .news-field__title {
     grid-area: field-title;
+    font-weight: bold;
 }
 
 .news-field__date {
     grid-area: field-date;
+    font-weight: bold;
 }
 
 .news-field__brief {
     grid-area: field-brief;
+    font-weight: bold;
 }
 
 .news-field__content {
     grid-area: field-content;
+    font-weight: bold;
 }
 
 .info-btns {
@@ -87,8 +117,4 @@ html, body {
     text-align: center;
     padding-top: 1rem;
     margin-top: 1rem;
-}
-
-.align-right {
-    text-align: right;
 }

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <html>
 <head>
@@ -49,9 +50,86 @@
                 <a class="news-li__content">${news.content}</a>
             </div>
             <div class="btn-group info-btns" role="group">
-                <button type="button" class="btn btn-outline-primary" onclick="window.location.href='showForm?newsId=${id}'">Edit
+                <button type="button" class="btn btn-outline-primary"
+                        onclick="window.location.href='showForm?newsId=${id}'">Edit
                 </button>
-                <button type="button" class="btn btn-outline-danger">Delete</button>
+                <button type="button" class="btn btn-outline-danger"
+                        onclick="window.location.href='delete/${id}'">Delete
+                </button>
+            </div>
+
+            <form:form action="/comments/save" method="post" modelAttribute="comment" cssClass="new_comment_form">
+                <h3>Add your comment</h3>
+                <table>
+                    <tr>
+                        <td><form:label path="author">Author</form:label></td>
+                        <td><form:input path="author" cssClass="form-control"/></td>
+                    </tr>
+                    <tr>
+                        <td><form:label path="content">Text</form:label></td>
+                        <td><form:input path="content" cssClass="form-control"/></td>
+                    </tr>
+                </table>
+                <form:hidden path="id"/>
+                <form:hidden path="news.id" value="${news.id}"/>
+                <form:hidden path="news.content" value="${news.content}"/>
+                <form:hidden path="news.creationDate" value="${news.creationDate}"/>
+                <form:hidden path="news.brief" value="${news.brief}"/>
+                <form:hidden path="news.title" value="${news.title}"/>
+                <form:hidden path="creationDate"/>
+                <div class="btn-group info-btns">
+                    <button type="submit" class="btn btn-outline-primary btn-sm">Save</button>
+                    <button type="button" class="btn btn-outline-danger btn-sm">Cancel</button>
+                </div>
+            </form:form>
+
+            <div id="comments">
+                <h3>Comments</h3>
+                <c:forEach items="${comments}" var="commentary">
+                    <div class="news-comment-li">
+                        <a class="comment-li-author">${commentary.author}</a>
+                        <a class="comment-li-date">${commentary.creationDate}</a>
+                        <a class="comment-li-content">${commentary.content}</a>
+                        <div class="btn-group comment-li-buttons">
+                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                    data-toggle="collapse" data-target="#editCollapse-${commentary.id}"
+                                    aria-expanded="false" aria-controls="editCollapse-${commentary.id}">edit
+                            </button>
+                        </div>
+                        <button type="button" class="btn btn-outline-danger btn-sm"
+                                onclick="window.location.href='/comments/delete/${news.id}/${commentary.id}'">delete
+                        </button>
+                    </div>
+                    <div class="collapse" id="editCollapse-${commentary.id}">
+                        <div>
+                            <form:form action="/comments/save" method="post" modelAttribute="comment">
+                                <table>
+                                    <tr>
+                                        <td><form:label path="author">Author</form:label></td>
+                                        <td><form:input path="author" value="${commentary.author}"
+                                                        cssClass="form-control"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><form:label path="content">Text</form:label></td>
+                                        <td><form:input path="content" value="${commentary.content}"
+                                                        cssClass="form-control"/></td>
+                                    </tr>
+                                </table>
+                                <form:hidden path="id" value="${commentary.id}"/>
+                                <form:hidden path="news.id" value="${news.id}"/>
+                                <form:hidden path="news.content" value="${news.content}"/>
+                                <form:hidden path="news.creationDate" value="${news.creationDate}"/>
+                                <form:hidden path="news.brief" value="${news.brief}"/>
+                                <form:hidden path="news.title" value="${news.title}"/>
+                                <form:hidden path="creationDate" value="${commentary.creationDate}"/>
+                                <div class="btn-group">
+                                    <button type="submit" class="btn btn-outline-primary btn-sm">Save</button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm">Cancel</button>
+                                </div>
+                            </form:form>
+                        </div>
+                    </div>
+                </c:forEach>
             </div>
         </div>
     </div>

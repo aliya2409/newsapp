@@ -29,7 +29,7 @@ public abstract class AbstractDAO<T> {
     }
 
     @Transactional
-    public T findById(long id){
+    public T findById(long id) {
         return getCurrentSession().get(clazz, id);
     }
 
@@ -48,10 +48,12 @@ public abstract class AbstractDAO<T> {
         return (T) getCurrentSession().merge(entity);
     }
 
+    @Transactional
     public void delete(T entity) {
         getCurrentSession().delete(entity);
     }
 
+    @Transactional
     public void deleteById(long entityId) {
         T entity = findById(entityId);
         delete(entity);

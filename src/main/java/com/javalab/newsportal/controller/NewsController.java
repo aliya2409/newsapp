@@ -1,7 +1,9 @@
 package com.javalab.newsportal.controller;
 
+import com.javalab.newsportal.model.Comment;
 import com.javalab.newsportal.model.News;
 import com.javalab.newsportal.service.AllNewsRetrievalService;
+import com.javalab.newsportal.service.NewsRemovalService;
 import com.javalab.newsportal.service.NewsRetrievalService;
 import com.javalab.newsportal.service.NewsSavingService;
 import org.springframework.stereotype.Controller;
@@ -9,20 +11,23 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
 @RequestMapping("news")
-public class HelloWorldController {
+public class NewsController {
     private final AllNewsRetrievalService allNewsRetrievalService;
     private final NewsRetrievalService newsRetrievalService;
     private final NewsSavingService newsSavingService;
+    private final NewsRemovalService newsRemovalService;
 
-    public HelloWorldController(AllNewsRetrievalService allNewsRetrievalService,
-                                NewsRetrievalService newsRetrievalService, NewsSavingService newsSavingService) {
+    public NewsController(AllNewsRetrievalService allNewsRetrievalService,
+                          NewsRetrievalService newsRetrievalService, NewsSavingService newsSavingService, NewsRemovalService newsRemovalService) {
         this.allNewsRetrievalService = allNewsRetrievalService;
         this.newsRetrievalService = newsRetrievalService;
         this.newsSavingService = newsSavingService;
+        this.newsRemovalService = newsRemovalService;
     }
 
     @GetMapping("/allnews")
@@ -33,16 +38,17 @@ public class HelloWorldController {
     }
 
     @GetMapping("/{id}")
-    public String resolveById(@PathVariable(value = "id") Long id, Model model) {
+    public String resolveById(@PathVariable(value = "id") Long id, HttpServletRequest request) {
         News news = newsRetrievalService.retrieve(id);
-        model.addAttribute("news", news);
-        return "viewNews";
+        request.setAttribute("news", news);
+        request.setAttribute("comment", new Comment());
+        return "forward:/comments";
     }
 
     @GetMapping("/showForm")
-    public String getEditForm(@RequestParam(value="newsId", required = false) Long newsId, Model model) {
+    public String getEditForm(@RequestParam(value = "newsId", required = false) Long newsId, Model model) {
         News news;
-        if(newsId != null) {
+        if (newsId != null) {
             news = newsRetrievalService.retrieve(newsId);
         } else {
             news = new News();
@@ -58,6 +64,12 @@ public class HelloWorldController {
             return "index";
         }
         newsSavingService.save(news);
+        return "redirect:/news/allnews";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Long id) {
+        newsRemovalService.remove(id);
         return "redirect:/news/allnews";
     }
 }

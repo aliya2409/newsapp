@@ -4,5 +4,5 @@ import com.javalab.newsportal.model.News;
 
 public interface NewsSavingService {
 
-    public News save(News news);
+    News save(News news);
 }

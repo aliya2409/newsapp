@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface AllNewsRetrievalService {
 
-    public List<News> retrieveAll();
+    List<News> retrieveAll();
 }
