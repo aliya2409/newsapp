@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<hibernate-mapping>
+<hibernate-mapping default-access="field">
     <class name="com.javalab.newsportal.model.Publication" table="Publication">
-        <id name="id" access="field">
+        <id name="id">
             <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator">
                 <param name="optimizer">none</param>
                 <param name="increment_size">1</param>
@@ -29,7 +29,7 @@
             <set name="comments" table="Commentary"
                  inverse="true" lazy="true" fetch="select">
                 <key>
-                    <column name="news_id" not-null="true" />
+                    <column name="id" not-null="true" />
                 </key>
                 <one-to-many class="com.javalab.newsportal.model.Comment" />
             </set>
@@ -42,7 +42,7 @@
             <property name="author" not-null="true" >
                 <column name="author"/>
             </property>
-            <many-to-one name="newsId" class="com.javalab.newsportal.model.News" fetch="select">
+            <many-to-one name="news" class="com.javalab.newsportal.model.News" fetch="select">
                 <column name="news_id" not-null="true" />
             </many-to-one>
         </joined-subclass>

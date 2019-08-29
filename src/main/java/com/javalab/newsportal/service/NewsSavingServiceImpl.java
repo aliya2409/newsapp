@@ -2,9 +2,11 @@ package com.javalab.newsportal.service;
 
 import com.javalab.newsportal.dao.NewsDAO;
 import com.javalab.newsportal.model.News;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+@Service("newsSavingService")
 public class NewsSavingServiceImpl implements NewsSavingService {
 
     private final NewsDAO newsDAO;

@@ -4,10 +4,18 @@ package com.javalab.newsportal.model;
 public class Comment extends Publication {
 
     public static  final  String AUTHOR = "author";
-    public static  final  String NEWS_ID = "news_id";
+    public static  final  String NEWS = "news";
 
     private String author;
-    private Long newsId;
+    private News news;
+
+    public News getNews() {
+        return news;
+    }
+
+    public void setNews(News news) {
+        this.news = news;
+    }
 
     public String getAuthor() {
         return author;
@@ -17,19 +25,12 @@ public class Comment extends Publication {
         this.author = author;
     }
 
-    public Long getNewsId() {
-        return newsId;
-    }
-
-    public void setNewsId(Long newsId) {
-        this.newsId = newsId;
-    }
-
     @Override
     public String toString() {
         return "Comment{" +
+                "id='" + getId() + '\'' +
                 "author='" + author + '\'' +
-                ", newsId=" + newsId +
+                ", news=" + news +
                 '}';
     }
 }

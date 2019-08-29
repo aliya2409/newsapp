@@ -1,12 +1,14 @@
 package com.javalab.newsportal.config;
 
+import com.javalab.newsportal.dao.CommentDAO;
 import com.javalab.newsportal.dao.NewsDAO;
 import com.javalab.newsportal.model.Comment;
 import com.javalab.newsportal.model.News;
-import com.javalab.newsportal.service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -35,11 +37,18 @@ public class AppConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        DateTimeFormatterRegistrar registrar = new DateTimeFormatterRegistrar();
+        registrar.setUseIsoFormat(true);
+        registrar.registerFormatters(registry);
+    }
+
     @Bean
     public ViewResolver internalResourceViewResolver() {
         InternalResourceViewResolver bean = new InternalResourceViewResolver();
         bean.setViewClass(JstlView.class);
-        bean.setPrefix("/WEB-INF/view/");
+        bean.setPrefix("/WEB-INF/views/");
         bean.setSuffix(".jsp");
         return bean;
     }
@@ -98,17 +107,7 @@ public class AppConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public AllNewsRetrievalService allNewsRetrievalService() {
-        return new AllNewsRetrievalServiceImpl(newsDAO());
-    }
-
-    @Bean
-    public NewsRetrievalService newsRetrievalService() {
-        return new NewsRetrievalServiceImpl(newsDAO());
-    }
-
-    @Bean
-    public NewsSavingService newsSavingService() {
-        return new NewsSavingServiceImpl(newsDAO());
+    public CommentDAO commentDAO() {
+        return new CommentDAO(sessionFactory().getObject(), Comment.class);
     }
 }

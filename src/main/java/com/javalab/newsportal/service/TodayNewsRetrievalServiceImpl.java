@@ -3,6 +3,7 @@ package com.javalab.newsportal.service;
 import com.javalab.newsportal.dao.NewsDAO;
 import com.javalab.newsportal.model.News;
 import com.javalab.newsportal.util.Constants;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+@Service("todayNewsRetrievalService")
 public class TodayNewsRetrievalServiceImpl implements  TodayNewsRetrievalService{
 
     private final NewsDAO newsDAO;
