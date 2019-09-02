@@ -3,8 +3,8 @@ package com.javalab.newsportal.model;
 
 public class Comment extends Publication {
 
-    public static  final  String AUTHOR = "author";
-    public static  final  String NEWS = "news";
+    public static final String AUTHOR = "author";
+    public static final String NEWS = "news";
 
     private String author;
     private News news;

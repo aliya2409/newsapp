@@ -58,11 +58,12 @@ public class NewsDAO extends AbstractDAO<News> {
         return news;
     }
 
-    public void deleteByIdCriteria(News news) {
+    @Transactional
+    public void deleteByIdCriteria(Long id) {
         CriteriaBuilder cb = getCurrentSession().getCriteriaBuilder();
         CriteriaDelete<News> delete = cb.createCriteriaDelete(clazz);
         Root root = delete.from(clazz);
-        delete.where(cb.equal(root.get(News.ID), news.getId()));
+        delete.where(cb.equal(root.get(News.ID), id));
         getCurrentSession().createQuery(delete).executeUpdate();
     }
 

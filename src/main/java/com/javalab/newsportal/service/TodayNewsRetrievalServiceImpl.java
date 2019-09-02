@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service("todayNewsRetrievalService")
-public class TodayNewsRetrievalServiceImpl implements  TodayNewsRetrievalService{
+public class TodayNewsRetrievalServiceImpl implements TodayNewsRetrievalService {
 
     private final NewsDAO newsDAO;
 

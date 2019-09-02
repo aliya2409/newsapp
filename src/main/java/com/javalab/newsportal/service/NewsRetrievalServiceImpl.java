@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service("newsRetrievalService")
 public class NewsRetrievalServiceImpl implements NewsRetrievalService {
+
     private final NewsDAO newsDAO;
 
     public NewsRetrievalServiceImpl(NewsDAO newsDAO) {
@@ -14,6 +15,7 @@ public class NewsRetrievalServiceImpl implements NewsRetrievalService {
 
     @Override
     public News retrieve(Long id) {
-        return newsDAO.findById(id);
+        return newsDAO.findById(id).orElseThrow(
+                IllegalArgumentException::new);
     }
 }

@@ -6,13 +6,13 @@ import org.hibernate.SessionFactory;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class AbstractDAO<T> {
     protected Class<T> clazz;
     private SessionFactory sessionFactory;
 
     public AbstractDAO() {
-
     }
 
     public AbstractDAO(SessionFactory sessionFactory, Class<T> clazz) {
@@ -29,8 +29,8 @@ public abstract class AbstractDAO<T> {
     }
 
     @Transactional
-    public T findById(long id) {
-        return getCurrentSession().get(clazz, id);
+    public Optional<T> findById(long id) {
+        return Optional.ofNullable(getCurrentSession().get(clazz, id));
     }
 
     @Transactional
@@ -55,8 +55,8 @@ public abstract class AbstractDAO<T> {
 
     @Transactional
     public void deleteById(long entityId) {
-        T entity = findById(entityId);
-        delete(entity);
+        Optional<T> entity = findById(entityId);
+        entity.ifPresent(ent -> delete(entity.get()));
     }
 
     protected Session getCurrentSession() {
