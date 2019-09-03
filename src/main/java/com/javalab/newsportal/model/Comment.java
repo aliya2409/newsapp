@@ -8,6 +8,7 @@ public class Comment extends Publication {
 
     private String author;
     private News news;
+    private Integer rating;
 
     public News getNews() {
         return news;
@@ -25,12 +26,21 @@ public class Comment extends Publication {
         this.author = author;
     }
 
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
                 "id='" + getId() + '\'' +
-                "author='" + author + '\'' +
-                ", news=" + news +
+                ", author='" + author + '\'' +
+                ", content='" + getContent() + '\'' +
+                ", newsId=" + news.getId() +
                 '}';
     }
 }

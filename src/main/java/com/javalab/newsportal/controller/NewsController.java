@@ -2,10 +2,10 @@ package com.javalab.newsportal.controller;
 
 import com.javalab.newsportal.model.Comment;
 import com.javalab.newsportal.model.News;
-import com.javalab.newsportal.service.AllNewsRetrievalService;
-import com.javalab.newsportal.service.NewsRemovalService;
-import com.javalab.newsportal.service.NewsRetrievalService;
-import com.javalab.newsportal.service.NewsSavingService;
+import com.javalab.newsportal.service.news.AllNewsRetrievalService;
+import com.javalab.newsportal.service.news.NewsRemovalService;
+import com.javalab.newsportal.service.news.NewsRetrievalService;
+import com.javalab.newsportal.service.news.NewsSavingService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

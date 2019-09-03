@@ -1,4 +1,4 @@
-package com.javalab.newsportal.service;
+package com.javalab.newsportal.service.news;
 
 import com.javalab.newsportal.dao.NewsDAO;
 import com.javalab.newsportal.model.News;

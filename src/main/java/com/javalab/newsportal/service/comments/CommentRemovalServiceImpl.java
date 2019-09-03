@@ -1,4 +1,4 @@
-package com.javalab.newsportal.service;
+package com.javalab.newsportal.service.comments;
 
 import com.javalab.newsportal.dao.CommentDAO;
 import org.springframework.stereotype.Service;

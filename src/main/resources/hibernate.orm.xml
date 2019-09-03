@@ -42,6 +42,9 @@
             <property name="author" not-null="true" >
                 <column name="author"/>
             </property>
+            <property name="rating" not-null="true" >
+                <column name="rating"/>
+            </property>
             <many-to-one name="news" class="com.javalab.newsportal.model.News" fetch="select">
                 <column name="news_id" not-null="true" />
             </many-to-one>

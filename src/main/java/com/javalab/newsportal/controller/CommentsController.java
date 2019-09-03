@@ -2,9 +2,9 @@ package com.javalab.newsportal.controller;
 
 import com.javalab.newsportal.model.Comment;
 import com.javalab.newsportal.model.News;
-import com.javalab.newsportal.service.CommentRemovalService;
-import com.javalab.newsportal.service.CommentSavingService;
-import com.javalab.newsportal.service.CommentsRetrievalService;
+import com.javalab.newsportal.service.comments.CommentRemovalService;
+import com.javalab.newsportal.service.comments.CommentSavingService;
+import com.javalab.newsportal.service.comments.CommentsRetrievalService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

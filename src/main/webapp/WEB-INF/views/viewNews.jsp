@@ -90,15 +90,16 @@
                         <a class="comment-li-author">${commentary.author}</a>
                         <a class="comment-li-date">${commentary.creationDate}</a>
                         <a class="comment-li-content">${commentary.content}</a>
+                        <a class="comment-li-rating">Rating: ${commentary.rating}</a>
                         <div class="btn-group comment-li-buttons">
                             <button type="button" class="btn btn-outline-primary btn-sm"
                                     data-toggle="collapse" data-target="#editCollapse-${commentary.id}"
                                     aria-expanded="false" aria-controls="editCollapse-${commentary.id}">edit
                             </button>
+                            <button type="button" class="btn btn-outline-danger btn-sm"
+                                    onclick="window.location.href='/comments/delete/${news.id}/${commentary.id}'">delete
+                            </button>
                         </div>
-                        <button type="button" class="btn btn-outline-danger btn-sm"
-                                onclick="window.location.href='/comments/delete/${news.id}/${commentary.id}'">delete
-                        </button>
                     </div>
                     <div class="collapse" id="editCollapse-${commentary.id}">
                         <div>
@@ -116,6 +117,7 @@
                                     </tr>
                                 </table>
                                 <form:hidden path="id" value="${commentary.id}"/>
+                                <form:hidden path="rating" value="${commentary.rating}"/>
                                 <form:hidden path="news.id" value="${news.id}"/>
                                 <form:hidden path="news.content" value="${news.content}"/>
                                 <form:hidden path="news.creationDate" value="${news.creationDate}"/>

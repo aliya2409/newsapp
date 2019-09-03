@@ -1,4 +1,4 @@
-package com.javalab.newsportal.service;
+package com.javalab.newsportal.service.comments;
 
 public interface CommentRemovalService {
 
