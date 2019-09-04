@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
+<%@ page import="com.javalab.newsportal.util.Constants" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -57,34 +58,41 @@
                         onclick="window.location.href='delete/${id}'">Delete
                 </button>
             </div>
-
-            <form:form action="/comments/save" method="post" modelAttribute="comment" cssClass="new_comment_form">
-                <h3>Add your comment</h3>
-                <table>
-                    <tr>
-                        <td><form:label path="author">Author</form:label></td>
-                        <td><form:input path="author" cssClass="form-control"/></td>
-                    </tr>
-                    <tr>
-                        <td><form:label path="content">Text</form:label></td>
-                        <td><form:input path="content" cssClass="form-control"/></td>
-                    </tr>
-                </table>
-                <form:hidden path="id"/>
-                <form:hidden path="news.id" value="${news.id}"/>
-                <form:hidden path="news.content" value="${news.content}"/>
-                <form:hidden path="news.creationDate" value="${news.creationDate}"/>
-                <form:hidden path="news.brief" value="${news.brief}"/>
-                <form:hidden path="news.title" value="${news.title}"/>
-                <form:hidden path="creationDate"/>
-                <div class="btn-group info-btns">
-                    <button type="submit" class="btn btn-outline-primary btn-sm">Save</button>
-                    <button type="button" class="btn btn-outline-danger btn-sm">Cancel</button>
-                </div>
-            </form:form>
-
             <div id="comments">
                 <h3>Comments</h3>
+                <div class="dropdown">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sort by
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/news/${news.id}?sortBy=date">date</a>
+                        <a class="dropdown-item" href="/news/${news.id}?sortBy=${Constants.RATING_SORTING_OPTION}">rating</a>
+                    </div>
+                </div>
+                <form:form action="/comments/save" method="post" modelAttribute="comment" cssClass="new_comment_form">
+                    <h5>Add your comment</h5>
+                    <table>
+                        <tr>
+                            <td><form:label path="author">Author</form:label></td>
+                            <td><form:input path="author" cssClass="form-control"/></td>
+                        </tr>
+                        <tr>
+                            <td><form:label path="content">Text</form:label></td>
+                            <td><form:input path="content" cssClass="form-control"/></td>
+                        </tr>
+                    </table>
+                    <form:hidden path="id"/>
+                    <form:hidden path="news.id" value="${news.id}"/>
+                    <form:hidden path="news.content" value="${news.content}"/>
+                    <form:hidden path="news.creationDate" value="${news.creationDate}"/>
+                    <form:hidden path="news.brief" value="${news.brief}"/>
+                    <form:hidden path="news.title" value="${news.title}"/>
+                    <form:hidden path="creationDate"/>
+                    <div class="btn-group info-btns">
+                        <button type="submit" class="btn btn-outline-primary btn-sm">Save</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm">Cancel</button>
+                    </div>
+                </form:form>
                 <c:forEach items="${comments}" var="commentary">
                     <div class="news-comment-li">
                         <a class="comment-li-author">${commentary.author}</a>

@@ -3,6 +3,7 @@ package com.javalab.newsportal.service.comments;
 import com.javalab.newsportal.dao.CommentDAO;
 import com.javalab.newsportal.model.Comment;
 import com.javalab.newsportal.model.News;
+import com.javalab.newsportal.util.Constants;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -21,12 +22,16 @@ public class CommentsRetrievalServiceImpl implements CommentsRetrievalService {
     }
 
     @Override
-    public List<Comment> retrieve(News news) {
-        Comparator<Comment> commentDateComparator = Comparator.comparing(Comment::getCreationDate, Comparator.reverseOrder());
-        Comparator<Comment> commentRatingComparator = Comparator.comparing(Comment::getRating, Comparator.reverseOrder());
+    public List<Comment> retrieve(News news, String sortBy) {
+        Comparator<Comment> comparator;
+        if (Constants.RATING_SORTING_OPTION.equals(sortBy)) {
+            comparator = Comparator.comparing(Comment::getRating, Comparator.reverseOrder());
+        } else {
+           comparator = Comparator.comparing(Comment::getCreationDate, Comparator.reverseOrder());
+        }
         return commentDAO.findByNews(news).stream()
                 .filter(andLogFilteredOutValues(p -> !p.getContent().toLowerCase().contains(PROHIBITED_WORD)))
-                .sorted(commentDateComparator)
+                .sorted(comparator)
                 .collect(Collectors.toList());
     }
 

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface CommentsRetrievalService {
 
-    List<Comment> retrieve(News news);
+    List<Comment> retrieve(News news, String sortBy);
 }

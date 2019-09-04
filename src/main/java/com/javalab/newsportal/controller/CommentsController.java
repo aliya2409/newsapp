@@ -29,8 +29,8 @@ public class CommentsController {
     }
 
     @GetMapping
-    public String showComments(HttpServletRequest request, Model model) {
-        List<Comment> comments = commentsRetrievalService.retrieve((News) request.getAttribute("news"));
+    public String showComments(@RequestParam(value = "sortBy", defaultValue = "date") String sortBy, HttpServletRequest request, Model model) {
+        List<Comment> comments = commentsRetrievalService.retrieve((News) request.getAttribute("news"), sortBy);
         model.addAttribute("news", request.getAttribute("news"));
         model.addAttribute("comment", request.getAttribute("comment"));
         model.addAttribute("comments", comments);
