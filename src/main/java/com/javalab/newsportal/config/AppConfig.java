@@ -58,7 +58,6 @@ public class AppConfig implements WebMvcConfigurer {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan("com.javalab.newsportal.model");
-        sessionFactory.setMappingResources("hibernate.orm.xml");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
