@@ -1,13 +1,21 @@
 package com.javalab.newsportal.model;
 
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "COMMENTARY")
 public class Comment extends Publication {
 
     public static final String AUTHOR = "author";
     public static final String NEWS = "news";
 
+    @Column(nullable = false)
     private String author;
+    @ManyToOne
+    @JoinColumn(name="news_id", nullable=false)
     private News news;
+    @Column(nullable = false)
     private Integer rating;
 
     public News getNews() {

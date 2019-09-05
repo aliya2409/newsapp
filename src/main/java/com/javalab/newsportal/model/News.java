@@ -1,15 +1,23 @@
 package com.javalab.newsportal.model;
 
+import javax.persistence.*;
 import java.util.Set;
 
+@Entity
+@Table(name = "NEWS")
+@NamedQuery(name = "News.findByTitle", query = "SELECT n FROM News n WHERE lower(n.title) LIKE :title")
+@NamedNativeQuery(name = "News.findByDate", resultClass = News.class, query="SELECT n.ID, n.TITLE, n.BRIEF, p.CONTENT, p.CR_DATE FROM News n JOIN Publication p ON p.id = n.id WHERE p.CR_DATE = to_date(:creationDate, 'YYYY-MM-DD hh24:mi:ss')")
 public class News extends Publication {
 
     public static final String TITLE = "title";
     public static final String BRIEF = "brief";
     public static final String COMMENTS = "comments";
 
+    @Column(nullable = false)
     private String title;
+    @Column(nullable = false)
     private String brief;
+    @OneToMany(mappedBy = "news")
     private Set<Comment> comments;
 
     public News() {
