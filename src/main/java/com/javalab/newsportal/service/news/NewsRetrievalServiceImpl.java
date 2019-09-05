@@ -4,6 +4,8 @@ import com.javalab.newsportal.dao.NewsDAO;
 import com.javalab.newsportal.model.News;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service("newsRetrievalService")
 public class NewsRetrievalServiceImpl implements NewsRetrievalService {
 
@@ -16,6 +18,6 @@ public class NewsRetrievalServiceImpl implements NewsRetrievalService {
     @Override
     public News retrieve(Long id) {
         return newsDAO.findById(id).orElseThrow(
-                IllegalArgumentException::new);
+                () -> new NoSuchElementException("Could not find news with id: " + id));
     }
 }

@@ -28,6 +28,11 @@ public class NewsDAO extends AbstractDAO<News> {
         return query.getResultList();
     }
 
+    @Transactional
+    public void deletePickedNewsById(List<Long> newsIds) {
+        newsIds.forEach(this::deleteById);
+    }
+
     public News findByIdCriteria(Long id) {
         CriteriaBuilder cb = getCurrentSession().getCriteriaBuilder();
         CriteriaQuery<News> query = cb.createQuery(clazz);

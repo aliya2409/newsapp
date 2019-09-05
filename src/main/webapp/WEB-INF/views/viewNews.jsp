@@ -78,7 +78,7 @@
                         </tr>
                         <tr>
                             <td><form:label path="content">Text</form:label></td>
-                            <td><form:input path="content" cssClass="form-control"/></td>
+                            <td><form:textarea path="content" rows="3" cols="30" cssClass="form-control"/></td>
                         </tr>
                     </table>
                     <form:hidden path="id"/>
@@ -120,7 +120,7 @@
                                     </tr>
                                     <tr>
                                         <td><form:label path="content">Text</form:label></td>
-                                        <td><form:input path="content" value="${commentary.content}"
+                                        <td><form:textarea path="content" rows="3" cols="30" value="${commentary.content}"
                                                         cssClass="form-control"/></td>
                                     </tr>
                                 </table>

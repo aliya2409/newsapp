@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <html>
 <head>
@@ -38,28 +39,27 @@
             </div>
         </div>
         <div class="col-10">
-            <c:forEach items="${newsList}" var="news">
-                <div class="news-comment-li">
-                    <h4 class="news-li__title">${news.title}</h4>
-                    <a class="news-li__date align-right">${news.creationDate}</a>
-                    <a class="news-li__brief">${news.brief}</a>
-                    <div class="news-li__buttons">
-                        <button type="button" class="btn btn-outline-primary btn-sm"
-                                onclick="window.location.href='${news.id}'">view
-                        </button>
-                        <button type="button" class="btn btn-outline-primary btn-sm"
-                                onclick="window.location.href='showForm?newsId=${news.id}'">edit
-                        </button>
-                        <div class="form-check form-check-inline my-checkbox">
-                            <input class="form-check-input" type="checkbox" name="checkedNews"
-                                   value="check_news_${news.id}">
+            <form:form action="/news/delete" method="POST" modelAttribute="listDTO">
+                <c:forEach items="${newsList}" var="news">
+                    <div class="news-comment-li">
+                        <h4 class="news-li__title">${news.title}</h4>
+                        <a class="news-li__date align-right">${news.creationDate}</a>
+                        <a class="news-li__brief">${news.brief}</a>
+                        <div class="news-li__buttons">
+                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                    onclick="window.location.href='${news.id}'">view
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                    onclick="window.location.href='showForm?newsId=${news.id}'">edit
+                            </button>
+                            <form:checkbox path="ids" value="${news.id}"/>
                         </div>
                     </div>
+                </c:forEach>
+                <div class="info-btns">
+                    <button type="submit" class="btn btn-outline-danger">Delete</button>
                 </div>
-            </c:forEach>
-            <div class="info-btns">
-                <button type="button" class="btn btn-outline-danger" onclick="window.location.href='#'">Delete</button>
-            </div>
+            </form:form>
         </div>
     </div>
 </div>

@@ -46,8 +46,8 @@
                 <form:hidden path="id" />
                 <form:hidden path="creationDate" />
                 <form:input path="title" class="news-li__title form-control"/>
-                <form:input path="brief" class="news-li__brief form-control"/>
-                <form:input path="content" class="news-li__content form-control"/>
+                <form:textarea path="brief" rows="4" cols="50" class="news-li__brief form-control"/>
+                <form:textarea path="content" rows="10" cols="50" class="news-li__content form-control"/>
                 <div class="info-btns">
                     <button type="submit" class="btn btn-outline-primary">Save</button>
                     <button type="button" class="btn btn-outline-danger">Cancel</button>

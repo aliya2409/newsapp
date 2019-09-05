@@ -4,6 +4,7 @@ import com.javalab.newsportal.dao.CommentDAO;
 import com.javalab.newsportal.model.Comment;
 import com.javalab.newsportal.model.News;
 import com.javalab.newsportal.util.Constants;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -16,6 +17,7 @@ public class CommentsRetrievalServiceImpl implements CommentsRetrievalService {
 
     private CommentDAO commentDAO;
     private final String PROHIBITED_WORD = "luxoft";
+    private static final Logger LOGGER = Logger.getLogger(CommentsRetrievalServiceImpl.class);
 
     public CommentsRetrievalServiceImpl(CommentDAO commentDAO) {
         this.commentDAO = commentDAO;
@@ -40,7 +42,7 @@ public class CommentsRetrievalServiceImpl implements CommentsRetrievalService {
             if (predicate.test(value)) {
                 return true;
             } else {
-                System.out.println("Filtered: " + value);
+                LOGGER.info("Filtered: " + value);
                 return false;
             }
         };
