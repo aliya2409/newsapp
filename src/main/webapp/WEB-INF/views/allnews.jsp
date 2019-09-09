@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="col-10">
-            <form:form action="/news/delete" method="POST" modelAttribute="listDTO">
+            <form:form action="/news/delete" method="POST" modelAttribute="idsDTO">
                 <c:forEach items="${newsList}" var="news">
                     <div class="news-comment-li">
                         <h4 class="news-li__title">${news.title}</h4>

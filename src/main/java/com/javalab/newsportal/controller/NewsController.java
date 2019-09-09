@@ -1,6 +1,6 @@
 package com.javalab.newsportal.controller;
 
-import com.javalab.newsportal.dto.ListDTO;
+import com.javalab.newsportal.dto.IdsDTO;
 import com.javalab.newsportal.model.Comment;
 import com.javalab.newsportal.model.News;
 import com.javalab.newsportal.service.news.AllNewsRetrievalService;
@@ -36,7 +36,7 @@ public class NewsController {
     public String listAllNews(Model model) {
         List<News> newsList = allNewsRetrievalService.retrieveAll();
         model.addAttribute("newsList", newsList);
-        model.addAttribute("listDTO", new ListDTO(new ArrayList<>()));
+        model.addAttribute("idsDTO", new IdsDTO(new ArrayList<>()));
         return "allnews";
     }
 
@@ -77,11 +77,11 @@ public class NewsController {
     }
 
     @PostMapping("/delete")
-    public String delete(@ModelAttribute("listDTO") ListDTO listDTO, BindingResult result) {
+    public String delete(@ModelAttribute("listDTO") IdsDTO idsDTO, BindingResult result) {
         if (result.hasErrors()) {
             return "index";
         }
-        newsRemovalService.removeList(listDTO.getIds());
+        newsRemovalService.removeList(idsDTO.getIds());
         return "redirect:/news/allnews";
     }
 }

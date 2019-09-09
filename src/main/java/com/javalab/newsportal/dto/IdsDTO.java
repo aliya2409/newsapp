@@ -2,11 +2,11 @@ package com.javalab.newsportal.dto;
 
 import java.util.List;
 
-public class ListDTO {
+public class IdsDTO {
 
     private List<Long> ids;
 
-    public ListDTO(List<Long> ids) {
+    public IdsDTO(List<Long> ids) {
         this.ids = ids;
     }
 
