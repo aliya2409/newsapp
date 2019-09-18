@@ -1,7 +1,9 @@
 package com.javalab.newsportal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "NEWS")
@@ -18,17 +20,18 @@ public class News extends Publication {
     @Column(nullable = false)
     private String brief;
     @OneToMany(mappedBy = "news")
-    private Set<Comment> comments;
+    @JsonIgnore
+    private List<Comment> comments;
 
     public News() {
         super();
     }
 
-    public Set<Comment> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(Set<Comment> comments) {
+    public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 

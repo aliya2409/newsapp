@@ -7,12 +7,17 @@ import com.javalab.newsportal.service.news.AllNewsRetrievalService;
 import com.javalab.newsportal.service.news.NewsRemovalService;
 import com.javalab.newsportal.service.news.NewsRetrievalService;
 import com.javalab.newsportal.service.news.NewsSavingService;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,15 +37,14 @@ public class NewsController {
         this.newsRemovalService = newsRemovalService;
     }
 
-    @GetMapping("/allnews")
-    public String listAllNews(Model model) {
+    @GetMapping(value = "/allnews", headers = "Accept=application/json")
+    public ResponseEntity<List<News>> listAllNews(HttpServletRequest request) {
         List<News> newsList = allNewsRetrievalService.retrieveAll();
-        model.addAttribute("newsList", newsList);
-        model.addAttribute("idsDTO", new IdsDTO(new ArrayList<>()));
-        return "allnews";
+        request.setAttribute("idsDTO", new IdsDTO(new ArrayList<>()));
+        return ResponseEntity.ok(newsList);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}")
     public String resolveById(@PathVariable(value = "id") Long id, HttpServletRequest request) {
         News news = newsRetrievalService.retrieve(id);
         request.setAttribute("news", news);
@@ -61,27 +65,39 @@ public class NewsController {
     }
 
     @PostMapping("/saveNews")
-    public String submit(@ModelAttribute("news") News news,
-                         BindingResult result) {
+    public ResponseEntity submit(@ModelAttribute("news") News news,
+                                 BindingResult result) {
         if (result.hasErrors()) {
-            return "index";
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         newsSavingService.save(news);
-        return "redirect:/news/allnews";
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/news/allnews");
+        return new ResponseEntity(headers, HttpStatus.FOUND);
+    }
+
+    @PostMapping("/date")
+    public ResponseEntity date(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date) {
+        System.out.println(date);
+        return ResponseEntity.ok(date);
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") Long id) {
+    public ResponseEntity delete(@PathVariable("id") Long id) {
         newsRemovalService.remove(id);
-        return "redirect:/news/allnews";
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/news/allnews");
+        return new ResponseEntity(headers, HttpStatus.FOUND);
     }
 
     @PostMapping("/delete")
-    public String delete(@ModelAttribute("listDTO") IdsDTO idsDTO, BindingResult result) {
+    public ResponseEntity delete(@ModelAttribute("listDTO") IdsDTO idsDTO, BindingResult result) {
         if (result.hasErrors()) {
-            return "index";
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         newsRemovalService.removeList(idsDTO.getIds());
-        return "redirect:/news/allnews";
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/news/allnews");
+        return new ResponseEntity(headers, HttpStatus.FOUND);
     }
 }

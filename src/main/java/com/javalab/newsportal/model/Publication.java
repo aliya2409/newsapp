@@ -1,5 +1,7 @@
 package com.javalab.newsportal.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -17,6 +19,7 @@ public abstract class Publication {
     @SequenceGenerator(name = "publication_seq", sequenceName = "publication_seq", allocationSize = 1)
     private Long id;
     @Column(name = "cr_date", nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime creationDate;
     @Column(nullable = false)
     private String content;

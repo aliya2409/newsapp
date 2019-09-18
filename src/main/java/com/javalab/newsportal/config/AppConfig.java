@@ -22,6 +22,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import javax.sql.DataSource;
+import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -41,6 +42,7 @@ public class AppConfig implements WebMvcConfigurer {
     public void addFormatters(FormatterRegistry registry) {
         DateTimeFormatterRegistrar registrar = new DateTimeFormatterRegistrar();
         registrar.setUseIsoFormat(true);
+        registrar.setDateTimeFormatter(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         registrar.registerFormatters(registry);
     }
 
