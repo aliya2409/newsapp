@@ -6,7 +6,6 @@ import com.javalab.newsportal.model.News;
 import com.javalab.newsportal.service.comments.CommentRemovalService;
 import com.javalab.newsportal.service.comments.CommentSavingService;
 import com.javalab.newsportal.service.comments.CommentsRetrievalService;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("comments")
 public class CommentsController {
 
@@ -46,16 +46,12 @@ public class CommentsController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         commentSavingService.save(comment);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "/news/" + comment.getNews().getId());
-        return new ResponseEntity(headers, HttpStatus.FOUND);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/delete/{newsId}/{commentId}")
     public ResponseEntity delete(@PathVariable(value = "newsId") Long newsId, @PathVariable(value = "commentId") Long commentId) {
         commentRemovalService.remove(commentId);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "/news/" + newsId);
-        return new ResponseEntity(headers, HttpStatus.FOUND);
+        return new ResponseEntity(HttpStatus.FOUND);
     }
 }

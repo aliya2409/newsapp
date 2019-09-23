@@ -19,7 +19,7 @@ public class News extends Publication {
     private String title;
     @Column(nullable = false)
     private String brief;
-    @OneToMany(mappedBy = "news")
+    @OneToMany(mappedBy = "news", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Comment> comments;
 

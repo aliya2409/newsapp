@@ -7,21 +7,18 @@ import com.javalab.newsportal.service.news.AllNewsRetrievalService;
 import com.javalab.newsportal.service.news.NewsRemovalService;
 import com.javalab.newsportal.service.news.NewsRetrievalService;
 import com.javalab.newsportal.service.news.NewsSavingService;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("news")
 public class NewsController {
     private final AllNewsRetrievalService allNewsRetrievalService;
@@ -52,18 +49,6 @@ public class NewsController {
         return "forward:/comments";
     }
 
-    @GetMapping("/showForm")
-    public String getEditForm(@RequestParam(value = "newsId", required = false) Long newsId, Model model) {
-        News news;
-        if (newsId != null) {
-            news = newsRetrievalService.retrieve(newsId);
-        } else {
-            news = new News();
-        }
-        model.addAttribute("news", news);
-        return "editNews";
-    }
-
     @PostMapping("/saveNews")
     public ResponseEntity submit(@ModelAttribute("news") News news,
                                  BindingResult result) {
@@ -71,23 +56,13 @@ public class NewsController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         newsSavingService.save(news);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "/news/allnews");
-        return new ResponseEntity(headers, HttpStatus.FOUND);
-    }
-
-    @PostMapping("/date")
-    public ResponseEntity date(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date) {
-        System.out.println(date);
-        return ResponseEntity.ok(date);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/delete/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id) {
         newsRemovalService.remove(id);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "/news/allnews");
-        return new ResponseEntity(headers, HttpStatus.FOUND);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/delete")
@@ -96,8 +71,6 @@ public class NewsController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         newsRemovalService.removeList(idsDTO.getIds());
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "/news/allnews");
-        return new ResponseEntity(headers, HttpStatus.FOUND);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

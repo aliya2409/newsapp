@@ -1,5 +1,6 @@
 package com.javalab.newsportal.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.javalab.newsportal.model.Comment;
 import com.javalab.newsportal.model.News;
 
@@ -11,6 +12,7 @@ public class NewsDTO {
     private String title;
     private String brief;
     private String content;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime creationDate;
     private Long id;
     private List<Comment> comments;
