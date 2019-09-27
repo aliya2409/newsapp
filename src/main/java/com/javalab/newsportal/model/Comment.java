@@ -48,7 +48,7 @@ public class Comment extends Publication {
                 "id='" + getId() + '\'' +
                 ", author='" + author + '\'' +
                 ", content='" + getContent() + '\'' +
-                ", newsId=" + news.getId() +
+                "," +
                 '}';
     }
 }

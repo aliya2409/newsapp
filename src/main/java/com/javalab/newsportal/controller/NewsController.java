@@ -1,7 +1,6 @@
 package com.javalab.newsportal.controller;
 
 import com.javalab.newsportal.dto.IdsDTO;
-import com.javalab.newsportal.model.Comment;
 import com.javalab.newsportal.model.News;
 import com.javalab.newsportal.service.news.AllNewsRetrievalService;
 import com.javalab.newsportal.service.news.NewsRemovalService;
@@ -45,12 +44,11 @@ public class NewsController {
     public String resolveById(@PathVariable(value = "id") Long id, HttpServletRequest request) {
         News news = newsRetrievalService.retrieve(id);
         request.setAttribute("news", news);
-        request.setAttribute("comment", new Comment());
         return "forward:/comments";
     }
 
     @PostMapping("/saveNews")
-    public ResponseEntity submit(@ModelAttribute("news") News news,
+    public ResponseEntity submit(@RequestBody News news,
                                  BindingResult result) {
         if (result.hasErrors()) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);

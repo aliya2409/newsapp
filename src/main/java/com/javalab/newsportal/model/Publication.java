@@ -5,9 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "PUBLICATION")
-@Inheritance(strategy = InheritanceType.JOINED)
+@MappedSuperclass
 public abstract class Publication {
 
     public static final String ID = "id";
