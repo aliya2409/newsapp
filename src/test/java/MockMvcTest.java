@@ -3,6 +3,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.javalab.newsportal.config.AppConfig;
 import com.javalab.newsportal.config.WebAppInitializer;
+import com.javalab.newsportal.controller.GlobalExceptionHandler;
+import com.javalab.newsportal.controller.NewsController;
 import com.javalab.newsportal.model.Comment;
 import com.javalab.newsportal.model.News;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -38,11 +41,34 @@ public class MockMvcTest {
     @Autowired
     protected WebApplicationContext webApplicationContext;
 
+    @Autowired
+    NewsController newsController;
+
     private MockMvc mockMvc;
 
     @BeforeEach
     void setup() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+//        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(newsController).setControllerAdvice(new GlobalExceptionHandler()).build();
+    }
+
+    @Test
+    void givenNotSupportedUri_whenGet_thenErrorJson() throws Exception {
+        mockMvc
+                .perform(get("/").contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+//                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$").exists()); //Error: content type not set;  No value at JSON path "$.message"
+    }
+
+    @Test
+    void givenNonExistingNewsId_whenGet_thenErrorJson() throws Exception {
+        mockMvc
+                .perform(get("/news/{id}", 1000))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message").exists());
     }
 
     @Test

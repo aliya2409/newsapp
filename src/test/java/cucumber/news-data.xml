@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <table name="news">
+        <column>id</column>
+        <column>title</column>
+        <column>brief</column>
+        <column>content</column>
+        <column>cr_date</column>
+        <row>
+            <value>1</value>
+            <value>Apple</value>
+            <value>Martini</value>
+            <value>Appletini</value>
+            <value>2019-10-01 20:30:00</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Orange</value>
+            <value>Whiskey</value>
+            <value>On the beach</value>
+            <value>2019-10-02 20:30:00</value>
+        </row>
+    </table>
+    <table name="commentary">
+        <column>id</column>
+        <column>author</column>
+        <column>content</column>
+        <column>cr_date</column>
+        <column>news_id</column>
+        <column>rating</column>
+        <row>
+            <value>4</value>
+            <value>AppletiniLover</value>
+            <value>I have an apple. I have martini...</value>
+            <value>2019-10-01 20:30:01</value>
+            <value>1</value>
+            <value>-1</value>
+        </row>
+    </table>
+</dataset>

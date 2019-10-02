@@ -12,9 +12,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class AssuredTest {
 
     @Test
-    void givenUrl_whenSuccessOnGetsResponseAndJsonHasRequiredKV_thenCorrect() {
-        given().log().all()
-                .when().get("/news/200").then().statusCode(200).assertThat()
+    void givenValidNewsId_whenGet_thenCorrect() {
+        given()
+                .when().get("/news/112").then().statusCode(200).assertThat()
                 .body("title", equalTo("www"))
                 .body("id", equalTo(112))
                 .body("brief", equalTo("www"))
@@ -23,8 +23,23 @@ class AssuredTest {
     }
 
     @Test
+    void givenInvalidNewsId_whenGet_thenNotFound() {
+        String invalidId = "200";
+        given()
+                .when().get("/news/" + invalidId).then().statusCode(404).assertThat()
+                .body("message", equalTo("Could not find news with id: " + invalidId));
+    }
+
+    @Test
+    void givenUnsupportedUri_whenGet_thenErrorJson() {
+        String uri = "/";
+        given().when().get(uri).then().statusCode(404).assertThat()
+                .body("message", equalTo("No handler found for GET " + uri));
+    }
+
+    @Test
     void whenGetAllNewsAndJsonHasRequiredKV_thenCorrect() {
-        News[] newsArr = given().log().all()
+        News[] newsArr = given()
                 .when().get("/news/allnews").then().statusCode(200).extract()
                 .as(News[].class);
         assertEquals(3, newsArr.length);
@@ -38,7 +53,7 @@ class AssuredTest {
         news.setContent("opopopop");
         RequestSpecification reqSpec = given()
                 .header("Content-Type", "application/json");
-        given().log().all().with().spec(reqSpec).body(news)
+        given().with().spec(reqSpec).body(news)
                 .when()
                 .request("POST", "/news/saveNews")
                 .then().log().ifStatusCodeMatches(greaterThan(200)).statusCode(200);
@@ -47,7 +62,7 @@ class AssuredTest {
     @Test
     void givenValidNewsIdGetDelete_thenResponseStatus200() {
         String newsId = "126";
-        given().log().all()
+        given()
                 .when().get("/news/delete/" + newsId).then().statusCode(200);
     }
 
@@ -59,7 +74,7 @@ class AssuredTest {
         comment.setContent("rrr");
         RequestSpecification reqSpec = given()
                 .header("Content-Type", "application/json").header("newsId", newsId);
-        given().log().all().with().spec(reqSpec).body(comment)
+        given().with().spec(reqSpec).body(comment)
                 .when()
                 .request("POST", "/comments/save")
                 .then().log().ifStatusCodeMatches(greaterThan(200)).statusCode(200);
@@ -76,7 +91,7 @@ class AssuredTest {
         comment.setRating(10);
         RequestSpecification reqSpec = given()
                 .header("Content-Type", "application/json").header("newsId", newsId);
-        given().log().all().with().spec(reqSpec).body(comment)
+        given().with().spec(reqSpec).body(comment)
                 .when()
                 .request("POST", "/comments/save")
                 .then().log().ifStatusCodeMatches(greaterThan(200)).statusCode(200);
@@ -85,7 +100,7 @@ class AssuredTest {
     @Test
     void givenValidCommentIdWhenGetDelete_thenOk() {
         String commentId = "131";
-        given().log().all()
+        given()
                 .when().get("/comments/delete/" + commentId).then().statusCode(200);
     }
 }
