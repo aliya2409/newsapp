@@ -46,6 +46,11 @@
             <artifactId>spring-security-config</artifactId>
             <version>5.2.0.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>5.2.0.RELEASE</version>
+        </dependency>
 
         <!-- https://www.mkyong.com/maven/how-to-add-oracle-jdbc-driver-in-your-maven-local-repository/ -->
         <dependency>

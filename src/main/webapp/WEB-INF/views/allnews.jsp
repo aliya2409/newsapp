@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <html>
 <head>
@@ -8,35 +10,14 @@
     <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>All news</title>
+    <title><spring:message code="logo"/></title>
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">NEWS portal</a>
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">English</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Russian</a>
-            </li>
-        </ul>
-    </nav>
-</header>
+<%@ include file="header.jsp" %>
 <div class="container content">
     <div class="row">
         <div class="col-2">
-            <div class="side-nav">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link" href="allnews">News List</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="showForm">Add News</a>
-                    </li>
-                </ul>
-            </div>
+            <%@ include file="sideNav.jsp" %>
         </div>
         <div class="col-10">
             <form:form action="/news/delete" method="POST" modelAttribute="idsDTO">
@@ -47,27 +28,28 @@
                         <a class="news-li__brief">${news.brief}</a>
                         <div class="news-li__buttons">
                             <button type="button" class="btn btn-outline-primary btn-sm"
-                                    onclick="window.location.href='${news.id}'">view
+                                    onclick="window.location.href='${news.id}'"><spring:message code="view"/>
                             </button>
                             <button type="button" class="btn btn-outline-primary btn-sm"
-                                    onclick="window.location.href='showForm?newsId=${news.id}'">edit
+                                    onclick="window.location.href='showForm?newsId=${news.id}'"><spring:message
+                                    code="edit"/>
                             </button>
                             <form:checkbox path="ids" value="${news.id}"/>
                         </div>
                     </div>
                 </c:forEach>
-                <div class="info-btns">
-                    <button type="submit" class="btn btn-outline-danger">Delete</button>
-                </div>
+                <c:if test="${not empty newsList}">
+                    <sec:authorize access="hasRole('ADMIN')">
+                    <div class="info-btns">
+                        <button type="submit" class="btn btn-outline-danger"><spring:message code="delete"/></button>
+                    </div>
+                    </sec:authorize>
+                </c:if>
             </form:form>
         </div>
     </div>
 </div>
-<footer class="footer">
-    <div class="container">
-        <span class="text-muted">Copyright © EPAM 2019. All rights reserved.</span>
-    </div>
-</footer>
+<%@ include file="footer.jsp" %>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
