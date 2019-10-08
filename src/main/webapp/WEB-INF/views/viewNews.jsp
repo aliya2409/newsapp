@@ -35,7 +35,7 @@
                 <button type="button" class="btn btn-outline-primary"
                         onclick="window.location.href='showForm?newsId=${id}'"><spring:message code="edit"/>
                 </button>
-                <sec:authorize access="hasRole('ADMIN')">
+                <sec:authorize access="hasAuthority('ADMIN')">
                 <button type="button" class="btn btn-outline-danger"
                         onclick="window.location.href='delete/${id}'"><spring:message code="delete"/>
                 </button>
@@ -87,7 +87,7 @@
                                     data-toggle="collapse" data-target="#editCollapse-${commentary.id}"
                                     aria-expanded="false" aria-controls="editCollapse-${commentary.id}"><spring:message code="edit"/>
                             </button>
-                            <sec:authorize access="hasRole('ADMIN')">
+                            <sec:authorize access="hasAuthority('ADMIN')">
                             <button type="button" class="btn btn-outline-danger btn-sm"
                                     onclick="window.location.href='/comments/delete/${news.id}/${commentary.id}'"><spring:message code="delete"/>
                             </button>

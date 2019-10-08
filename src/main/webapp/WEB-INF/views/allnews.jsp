@@ -34,15 +34,18 @@
                                     onclick="window.location.href='showForm?newsId=${news.id}'"><spring:message
                                     code="edit"/>
                             </button>
-                            <form:checkbox path="ids" value="${news.id}"/>
+                            <sec:authorize access="hasRole('ADMIN')">
+                                <form:checkbox path="ids" value="${news.id}"/>
+                            </sec:authorize>
                         </div>
                     </div>
                 </c:forEach>
                 <c:if test="${not empty newsList}">
-                    <sec:authorize access="hasRole('ADMIN')">
-                    <div class="info-btns">
-                        <button type="submit" class="btn btn-outline-danger"><spring:message code="delete"/></button>
-                    </div>
+                    <sec:authorize access="hasAuthority('ADMIN')">
+                        <div class="info-btns">
+                            <button type="submit" class="btn btn-outline-danger"><spring:message
+                                    code="delete"/></button>
+                        </div>
                     </sec:authorize>
                 </c:if>
             </form:form>
