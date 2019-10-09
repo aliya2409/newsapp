@@ -36,3 +36,9 @@ Feature: News
     Then the status code is 404
     And the response contains a json
     And the json's 'message' property includes 'Could not find news with id: 3'
+
+  @DeletingListNews
+  Scenario: User calls a web service to delete a list of news ids
+    Given a list of news ids
+    When a user makes POST request to /news/delete
+    Then the status code is 200

@@ -5,6 +5,6 @@ import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/java/cucumber/resources")
-public class CucumberTest {
+@CucumberOptions(features = "src/test/java/cucumber/resources/features/news_feature.feature")
+public class NewsIT {
 }

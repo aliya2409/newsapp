@@ -10,6 +10,9 @@ public class IdsDTO {
         this.ids = ids;
     }
 
+    public IdsDTO() {
+    }
+
     public List<Long> getIds() {
         return ids;
     }

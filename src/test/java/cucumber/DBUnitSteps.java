@@ -1,6 +1,5 @@
 package cucumber;
 
-import com.github.springtestdbunit.annotation.DatabaseSetup;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import org.dbunit.database.DatabaseDataSourceConnection;
@@ -22,35 +21,51 @@ public class DBUnitSteps {
     }
 
     @Before("@CommentsToNews")
-    @DatabaseSetup(value = "classpath:news-data.xml")
-    public void initAllNews() throws Exception {
-        System.out.println("fv fvfv");
+    public void loadCommentsTestData() throws Exception {
+        loadData();
+    }
+
+    @Before("@AllNews")
+    public void loadNewsTestData() throws Exception {
+        loadData();
+    }
+
+    @After("@DeletingListNews")
+    public void afterNewsIT() throws Exception {
+        cleanup();
+    }
+
+    @After("@DeletingComment")
+    public void afterCommentsIT() throws Exception {
+        cleanup();
+    }
+
+    private void loadData() throws Exception {
         IDatabaseConnection connection = getConnection();
         IDataSet dataSet = getDataSet();
-        try{
+        try {
             DatabaseOperation.DELETE_ALL.execute(connection, getDataSet());
             DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
-        }finally {
+        } finally {
             connection.close();
         }
     }
 
-    @After("@GettingDeletedNews")
-    public void afterScenario() throws Exception {
+    private void cleanup() throws Exception {
         IDatabaseConnection connection = getConnection();
-        try{
+        try {
             DatabaseOperation.DELETE_ALL.execute(connection, getDataSet());
-        }finally {
+        } finally {
             connection.close();
         }
     }
 
-    private IDatabaseConnection getConnection() throws Exception{
+    private IDatabaseConnection getConnection() throws Exception {
         return new DatabaseDataSourceConnection(dataSource);
     }
 
     private IDataSet getDataSet() throws Exception {
-        InputStream is = new FileInputStream("src/test/java/cucumber/news-data.xml");
+        InputStream is = new FileInputStream("src/test/java/cucumber/resources/data/news-data.xml");
         return new XmlDataSet(is);
     }
 }

@@ -64,7 +64,7 @@ public class NewsController {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity delete(@ModelAttribute("listDTO") IdsDTO idsDTO, BindingResult result) {
+    public ResponseEntity delete(@RequestBody IdsDTO idsDTO, BindingResult result) {
         if (result.hasErrors()) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }

@@ -1,26 +1,21 @@
-package cucumber;
+package cucumber.comments;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.javalab.newsportal.config.AppConfig;
 import com.javalab.newsportal.config.WebAppInitializer;
 import com.javalab.newsportal.model.Comment;
 import com.javalab.newsportal.model.News;
+import cucumber.TestConfig;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -37,21 +32,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {AppConfig.class, WebAppInitializer.class, TestConfig.class})
 @WebAppConfiguration()
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
-        DirtiesContextTestExecutionListener.class,
-        TransactionalTestExecutionListener.class,
-        DbUnitTestExecutionListener.class})
 public class CommentsFeatureStepDefs {
 
-    @Autowired
-    protected WebApplicationContext webApplicationContext;
-    protected MockMvc mockMvc;
-    private ResultActions response;
-    private String json;
-    private News news;
     private final String ENDPOINT_GET_COMMENTS = "/comments";
     private final String ENDPOINT_SAVE_COMMENT = "/comments/save";
     private final String ENDPOINT_DELETE_COMMENT_BY_ID = "/comments/delete/{id}";
+    private MockMvc mockMvc;
+    private ResultActions response;
+    private String json;
+    private News news;
 
     public CommentsFeatureStepDefs(WebApplicationContext webApplicationContext) {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
