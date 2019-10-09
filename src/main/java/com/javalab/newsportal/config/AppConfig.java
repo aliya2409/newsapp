@@ -2,8 +2,10 @@ package com.javalab.newsportal.config;
 
 import com.javalab.newsportal.dao.CommentDAO;
 import com.javalab.newsportal.dao.NewsDAO;
+import com.javalab.newsportal.dao.UserDAO;
 import com.javalab.newsportal.model.Comment;
 import com.javalab.newsportal.model.News;
+import com.javalab.newsportal.model.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -144,5 +146,10 @@ public class AppConfig implements WebMvcConfigurer {
     @Bean
     public CommentDAO commentDAO() {
         return new CommentDAO(sessionFactory().getObject(), Comment.class);
+    }
+
+    @Bean
+    public UserDAO userDAO() {
+        return new UserDAO(sessionFactory().getObject(), User.class);
     }
 }
