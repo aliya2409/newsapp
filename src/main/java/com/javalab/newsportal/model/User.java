@@ -5,6 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "USERS")
+@NamedQuery(name = "User.findUsername", query = "SELECT u.username FROM User u WHERE u.username = :username")
 public class User {
 
     public static final String USERNAME = "username";
@@ -66,5 +67,13 @@ public class User {
 
     public void setAuthorities(List<UserRoles> authorities) {
         this.authorities = authorities;
+    }
+
+    public void addAuthority(UserRoles role) {
+        authorities.add(role);
+    }
+
+    public void removeAuthority(UserRoles role) {
+        authorities.remove(role);
     }
 }

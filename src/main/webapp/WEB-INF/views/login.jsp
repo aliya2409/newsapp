@@ -37,6 +37,7 @@
         </tr>
     </table>
 </form>
+    <a href="/users/showForm"><spring:message code="registration"/></a>
 <c:if test="${param.error == true}"><spring:message code="error.login"/></c:if>
 </div>
 <%@ include file="footer.jsp"%>

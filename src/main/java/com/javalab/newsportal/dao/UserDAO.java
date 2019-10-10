@@ -23,4 +23,12 @@ public class UserDAO extends AbstractDAO<User> {
         query.select(root).where(cb.equal(root.get(User.USERNAME), username));
         return Optional.ofNullable(getCurrentSession().createQuery(query).getSingleResult());
     }
+
+    public Boolean findUsername(String username) {
+        CriteriaBuilder cb = getCurrentSession().getCriteriaBuilder();
+        CriteriaQuery<String> query = cb.createQuery(String.class);
+        Root<User> root = query.from(clazz);
+        query.select(root.get(User.USERNAME)).where(cb.equal(root.get(User.USERNAME), username));
+        return !getCurrentSession().createQuery(query).getResultList().isEmpty();
+    }
 }
