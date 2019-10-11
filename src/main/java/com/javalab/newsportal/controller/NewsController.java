@@ -1,5 +1,6 @@
 package com.javalab.newsportal.controller;
 
+import com.javalab.newsportal.annotations.security.IsModerator;
 import com.javalab.newsportal.dto.IdsDTO;
 import com.javalab.newsportal.model.Comment;
 import com.javalab.newsportal.model.News;
@@ -71,12 +72,14 @@ public class NewsController {
     }
 
     @GetMapping("/delete/{id}")
+    @IsModerator
     public String delete(@PathVariable("id") Long id) {
         newsRemovalService.remove(id);
         return "redirect:/news/allnews";
     }
 
     @PostMapping("/delete")
+    @IsModerator
     public String delete(@ModelAttribute("listDTO") IdsDTO idsDTO, BindingResult result) {
         if (result.hasErrors()) {
             return "index";

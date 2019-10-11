@@ -1,5 +1,6 @@
 package com.javalab.newsportal.controller;
 
+import com.javalab.newsportal.annotations.security.IsAdmin;
 import com.javalab.newsportal.dto.AuthoritiesDTO;
 import com.javalab.newsportal.model.User;
 import com.javalab.newsportal.service.users.AllUsersRetrievalService;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("admin")
+@IsAdmin
 public class AdminController {
 
     private final UserRemovalService userRemovalService;

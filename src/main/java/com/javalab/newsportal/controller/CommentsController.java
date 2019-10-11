@@ -5,12 +5,14 @@ import com.javalab.newsportal.model.News;
 import com.javalab.newsportal.service.comments.CommentRemovalService;
 import com.javalab.newsportal.service.comments.CommentSavingService;
 import com.javalab.newsportal.service.comments.CommentsRetrievalService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -38,16 +40,19 @@ public class CommentsController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute("comment") Comment comment, BindingResult result) {
+    @PreAuthorize("isAuthenticated()")
+    public String save(@ModelAttribute("comment") Comment comment, BindingResult result, Principal principal) {
         if (result.hasErrors()) {
             return "index";
         }
+        comment.setAuthor(principal.getName());
         commentSavingService.save(comment);
         return "redirect:/news/" + comment.getNews().getId();
     }
 
-    @GetMapping("/delete/{newsId}/{commentId}")
-    public String delete(@PathVariable(value = "newsId") Long newsId, @PathVariable(value = "commentId") Long commentId) {
+    @PostMapping("/delete/{newsId}/{commentId}")
+    @PreAuthorize("hasAuthority(T(com.javalab.newsportal.model.UserRoles).MODERATOR.name()) or isAuthenticated() and #username == principal.username")
+    public String delete(@PathVariable Long newsId, @PathVariable Long commentId, @RequestParam(value = "username") String username) {
         commentRemovalService.remove(commentId);
         return "redirect:/news/" + newsId;
     }

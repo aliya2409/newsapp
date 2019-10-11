@@ -16,12 +16,16 @@ html, body {
 
 .news-comment-li {
     display: grid;
-    grid-template-columns: auto 15rem;
+    grid-template-columns: auto 10rem;
     grid-template-rows: auto auto 2rem;
-    grid-template-areas: "title date" "brief ." "rating buttons";
+    grid-template-areas: "title date" "brief extra" "rating buttons";
     grid-gap: 0.5rem;
     margin-bottom: 2rem;
     margin-top: 2rem;
+}
+
+.btn-extra {
+    grid-area: extra;
 }
 
 .news-table {

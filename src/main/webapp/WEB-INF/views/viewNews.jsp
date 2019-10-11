@@ -55,61 +55,66 @@
                                 code="byRating"/></a>
                     </div>
                 </div>
-                <form:form action="/comments/save" method="post" modelAttribute="comment" cssClass="new_comment_form">
-                    <h5><spring:message code="addComment"/></h5>
-                    <table>
-                        <tr>
-                            <td><form:label path="author"><spring:message code="author"/></form:label></td>
-                            <td><form:input path="author" cssClass="form-control"/></td>
-                        </tr>
-                        <tr>
-                            <td><form:label path="content"><spring:message code="text"/></form:label></td>
-                            <td><form:textarea path="content" rows="3" cols="30" cssClass="form-control"/></td>
-                        </tr>
-                    </table>
-                    <form:hidden path="id"/>
-                    <form:hidden path="news.id" value="${news.id}"/>
-                    <form:hidden path="news.content" value="${news.content}"/>
-                    <form:hidden path="news.creationDate" value="${news.creationDate}"/>
-                    <form:hidden path="news.brief" value="${news.brief}"/>
-                    <form:hidden path="news.title" value="${news.title}"/>
-                    <form:hidden path="creationDate"/>
-                    <div class="btn-group info-btns">
-                        <button type="submit" class="btn btn-outline-primary btn-sm"><spring:message
-                                code="save"/></button>
-                        <button type="button" class="btn btn-outline-danger btn-sm"><spring:message
-                                code="cancel"/></button>
-                    </div>
-                </form:form>
+                <sec:authorize access="isAuthenticated()">
+                    <form:form action="/comments/save" method="post" modelAttribute="comment"
+                               cssClass="new_comment_form">
+                        <h5><spring:message code="addComment"/></h5>
+                        <table>
+                            <tr>
+                                <td><form:label path="content"><spring:message code="text"/></form:label></td>
+                                <td><form:textarea path="content" rows="3" cols="30" cssClass="form-control"/></td>
+                            </tr>
+                        </table>
+                        <form:hidden path="author"/>
+                        <form:hidden path="id"/>
+                        <form:hidden path="news.id" value="${news.id}"/>
+                        <form:hidden path="news.content" value="${news.content}"/>
+                        <form:hidden path="news.creationDate" value="${news.creationDate}"/>
+                        <form:hidden path="news.brief" value="${news.brief}"/>
+                        <form:hidden path="news.title" value="${news.title}"/>
+                        <form:hidden path="creationDate"/>
+                        <div class="btn-group info-btns">
+                            <button type="submit" class="btn btn-outline-primary btn-sm"><spring:message
+                                    code="save"/></button>
+                            <button type="button" class="btn btn-outline-danger btn-sm"><spring:message
+                                    code="cancel"/></button>
+                        </div>
+                    </form:form>
+                </sec:authorize>
                 <c:forEach items="${comments}" var="commentary">
                     <div class="news-comment-li">
                         <a class="comment-li-author">${commentary.author}</a>
                         <a class="comment-li-date">${commentary.creationDate}</a>
                         <a class="comment-li-content">${commentary.content}</a>
                         <a class="comment-li-rating"><spring:message code="rating"/> ${commentary.rating}</a>
-                        <div class="btn-group comment-li-buttons">
-                            <button type="button" class="btn btn-outline-primary btn-sm"
-                                    data-toggle="collapse" data-target="#editCollapse-${commentary.id}"
-                                    aria-expanded="false" aria-controls="editCollapse-${commentary.id}"><spring:message
-                                    code="edit"/>
-                            </button>
-                            <sec:authorize access="hasAuthority('MODERATOR')">
-                                <button type="button" class="btn btn-outline-danger btn-sm"
-                                        onclick="window.location.href='/comments/delete/${news.id}/${commentary.id}'">
-                                    <spring:message code="delete"/>
+                            <sec:authentication var="user" property="principal"/>
+                            <c:set var="containsModerator" value="false"/>
+                            <c:forEach var="item" items="${user.authorities}">
+                                <c:if test="${item eq 'MODERATOR'}">
+                                    <c:set var="containsModerator" value="true"/>
+                                </c:if>
+                            </c:forEach>
+                            <c:if test="${commentary.author == user.username or containsModerator == true}">
+                                <form action="/comments/delete/${news.id}/${commentary.id}" method="post" class="comment-li-buttons">
+                                    <input  type="hidden" name="username" value="${commentary.author}"/>
+                                    <button type="submit" class="btn btn-outline-danger btn-sm btn-block">
+                                        <spring:message code="delete"/>
+                                    </button>
+                                </form>
+                            </c:if>
+                            <c:if test="${commentary.author == user.username}">
+                                <button type="button" class="btn btn-outline-primary btn-sm btn-extra"
+                                        data-toggle="collapse" data-target="#editCollapse-${commentary.id}"
+                                        aria-expanded="false" aria-controls="editCollapse-${commentary.id}">
+                                    <spring:message
+                                            code="edit"/>
                                 </button>
-                            </sec:authorize>
-                        </div>
+                            </c:if>
                     </div>
                     <div class="collapse" id="editCollapse-${commentary.id}">
                         <div>
                             <form:form action="/comments/save" method="post" modelAttribute="comment">
                                 <table>
-                                    <tr>
-                                        <td><form:label path="author"><spring:message code="author"/></form:label></td>
-                                        <td><form:input path="author" value="${commentary.author}"
-                                                        cssClass="form-control"/></td>
-                                    </tr>
                                     <tr>
                                         <td><form:label path="content"><spring:message
                                                 code="content"/></form:label></td>
@@ -119,6 +124,7 @@
                                     </tr>
                                 </table>
                                 <form:hidden path="id" value="${commentary.id}"/>
+                                <form:hidden path="author" value="${commentary.author}"/>
                                 <form:hidden path="rating" value="${commentary.rating}"/>
                                 <form:hidden path="news.id" value="${news.id}"/>
                                 <form:hidden path="news.content" value="${news.content}"/>
