@@ -31,20 +31,21 @@
                                     onclick="window.location.href='${news.id}'"><spring:message code="view"/>
                             </button>
                             <button type="button" class="btn btn-outline-primary btn-sm"
-                                    onclick="window.location.href='showForm?newsId=${news.id}'"><spring:message
-                                    code="edit"/>
+                                    onclick="window.location.href='showForm?newsId=${news.id}'">
+                                <spring:message code="edit"/>
                             </button>
-                            <sec:authorize access="hasRole('ADMIN')">
+                            <sec:authorize access="hasAuthority('MODERATOR')">
                                 <form:checkbox path="ids" value="${news.id}"/>
                             </sec:authorize>
                         </div>
                     </div>
                 </c:forEach>
                 <c:if test="${not empty newsList}">
-                    <sec:authorize access="hasAuthority('ADMIN')">
+                    <sec:authorize access="hasAuthority('MODERATOR')">
                         <div class="info-btns">
-                            <button type="submit" class="btn btn-outline-danger"><spring:message
-                                    code="delete"/></button>
+                            <button type="submit" class="btn btn-outline-danger">
+                                <spring:message code="delete"/>
+                            </button>
                         </div>
                     </sec:authorize>
                 </c:if>

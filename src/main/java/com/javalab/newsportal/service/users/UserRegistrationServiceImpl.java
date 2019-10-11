@@ -8,7 +8,7 @@ import com.javalab.newsportal.model.UserRoles;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Set;
 
 @Service
 public class UserRegistrationServiceImpl implements UserRegistrationService {
@@ -28,8 +28,9 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         user.setUsername(userDTO.getUsername());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setEnabled(true);
-        user.setAuthorities(new ArrayList<>());
-        user.addAuthority(UserRoles.USER);
+        Set<UserRoles> roles = userDTO.getRoles();
+        if (roles.isEmpty()) roles.add(UserRoles.USER);
+        user.setAuthorities(roles);
         return userDAO.save(user);
     }
 

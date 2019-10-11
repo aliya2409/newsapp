@@ -9,7 +9,8 @@ html, body {
 
 .side-nav {
     position: fixed;
-    top: 30vh;
+    top: 15vh;
+    left: 15vh;
     font-size: 1rem;
 }
 

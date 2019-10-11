@@ -1,7 +1,7 @@
 package com.javalab.newsportal.model;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "USERS")
@@ -10,6 +10,8 @@ public class User {
 
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
+    public static final String AUTHORITIES = "authorities";
+    public static final String ENABLED = "enabled";
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
@@ -27,7 +29,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "authority")
     @Enumerated(EnumType.ORDINAL)
-    private List<UserRoles> authorities;
+    private Set<UserRoles> authorities;
 
     public Long getId() {
         return id;
@@ -61,19 +63,11 @@ public class User {
         this.enabled = enabled;
     }
 
-    public List<UserRoles> getAuthorities() {
+    public Set<UserRoles> getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(List<UserRoles> authorities) {
+    public void setAuthorities(Set<UserRoles> authorities) {
         this.authorities = authorities;
-    }
-
-    public void addAuthority(UserRoles role) {
-        authorities.add(role);
-    }
-
-    public void removeAuthority(UserRoles role) {
-        authorities.remove(role);
     }
 }

@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -30,5 +31,15 @@ public class UserDAO extends AbstractDAO<User> {
         Root<User> root = query.from(clazz);
         query.select(root.get(User.USERNAME)).where(cb.equal(root.get(User.USERNAME), username));
         return !getCurrentSession().createQuery(query).getResultList().isEmpty();
+    }
+
+    @Override
+    public List<User> findAll() {
+        CriteriaBuilder cb = getCurrentSession().getCriteriaBuilder();
+        CriteriaQuery<User> query = cb.createQuery(User.class);
+        Root<User> root = query.from(clazz);
+        query.select(root);
+        query.orderBy(cb.asc(root.get(User.USERNAME)));
+        return getCurrentSession().createQuery(query).getResultList();
     }
 }

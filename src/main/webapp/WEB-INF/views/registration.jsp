@@ -29,8 +29,39 @@
                         <td><form:password path="password" cssClass="form-control"/></td>
                     </tr>
                     <tr>
-                        <td><form:label path="matchingPassword"><spring:message code="confirm"/> <spring:message code="password"/></form:label></td>
+                        <td><form:label path="matchingPassword"><spring:message code="confirm"/> <spring:message
+                                code="password"/></form:label></td>
                         <td><form:password path="matchingPassword" cssClass="form-control"/></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary btn-sm  dropdown-toggle" type="button"
+                                        id="dropdownMenu1" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="true">
+                                    <spring:message code="authorities"/>
+                                </button>
+                                <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
+                                    <li>
+                                        <label>
+                                            <spring:message code="admin"/><form:checkbox path="roles"
+                                                                                         value="ADMIN"/>
+                                        </label>
+                                    </li>
+
+                                    <li>
+                                        <label>
+                                            <spring:message code="user"/><form:checkbox path="roles" value="USER"/>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label>
+                                            <spring:message code="user"/><form:checkbox path="roles" value="MODERATOR"/>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
                     </tr>
                 </table>
                 <div class="info-btns">

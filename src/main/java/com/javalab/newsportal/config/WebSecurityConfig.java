@@ -1,6 +1,7 @@
 package com.javalab.newsportal.config;
 
 
+import com.javalab.newsportal.model.UserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,12 +45,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/news/delete/**").hasRole("ADMIN")
-                .antMatchers("/comments/delete/**").hasRole("ADMIN")
-                .antMatchers("/resources/**").permitAll()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/news/delete/**").hasAuthority(UserRoles.MODERATOR.name())
+                .antMatchers("/comments/delete/**").hasAuthority(UserRoles.MODERATOR.name())
+                .antMatchers("/admin/**").hasAuthority(UserRoles.ADMIN.name())
                 .antMatchers("/users/register").permitAll()
                 .antMatchers("/users/showForm").permitAll()
+                .antMatchers("/resources/**").permitAll()
+                .antMatchers("/login").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").permitAll()
                 .loginProcessingUrl("/perform_login")
