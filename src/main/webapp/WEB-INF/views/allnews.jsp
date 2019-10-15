@@ -2,6 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri="http://sargue.net/jsptags/time" prefix="javatime" %>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <html>
 <head>
@@ -24,7 +25,9 @@
                 <c:forEach items="${newsList}" var="news">
                     <div class="news-comment-li">
                         <h4 class="news-li__title">${news.title}</h4>
-                        <a class="news-li__date align-right">${news.creationDate}</a>
+                        <spring:message code='date.pattern' var="datePattern"/>
+                        <javatime:format value="${news.creationDate}" pattern="${datePattern}" var="parsedDate"/>
+                        <a class="news-li__date align-right">${parsedDate}</a>
                         <a class="news-li__brief">${news.brief}</a>
                         <div class="news-li__buttons">
                             <button type="button" class="btn btn-outline-primary btn-sm"

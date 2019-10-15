@@ -26,42 +26,50 @@
                     </tr>
                     <tr>
                         <td><form:label path="password"><spring:message code="password"/></form:label></td>
-                        <td><form:password path="password" cssClass="form-control"/></td>
+                        <td><form:password path="password" id="newPass" onkeyup="check()" cssClass="form-control"/></td>
                     </tr>
                     <tr>
                         <td><form:label path="matchingPassword"><spring:message code="confirm"/> <spring:message
                                 code="password"/></form:label></td>
-                        <td><form:password path="matchingPassword" cssClass="form-control"/></td>
+                        <td><form:password path="matchingPassword" id="confirmPass" onkeyup="check()"
+                                           cssClass="form-control"/>
+                        </td>
+                        <td>
+                            <span class="error-text" id='message'></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary btn-sm  dropdown-toggle" type="button"
-                                        id="dropdownMenu1" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="true">
-                                    <spring:message code="authorities"/>
-                                </button>
-                                <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
-                                    <li>
-                                        <label>
-                                            <spring:message code="admin"/><form:checkbox path="roles"
-                                                                                         value="ADMIN"/>
-                                        </label>
-                                    </li>
+                        <sec:authorize access="hasAuthority('ADMIN')">
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary btn-sm  dropdown-toggle" type="button"
+                                            id="dropdownMenu1" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="true">
+                                        <spring:message code="authorities"/>
+                                    </button>
+                                    <ul class="dropdown-menu checkbox-menu allow-focus" aria-labelledby="dropdownMenu1">
+                                        <li>
+                                            <label>
+                                                <spring:message code="admin"/><form:checkbox path="roles"
+                                                                                             value="ADMIN"/>
+                                            </label>
+                                        </li>
 
-                                    <li>
-                                        <label>
-                                            <spring:message code="user"/><form:checkbox path="roles" value="USER"/>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>
-                                            <spring:message code="user"/><form:checkbox path="roles" value="MODERATOR"/>
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
+                                        <li>
+                                            <label>
+                                                <spring:message code="user"/><form:checkbox path="roles" value="USER"/>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <spring:message code="moderator"/><form:checkbox path="roles"
+                                                                                                 value="MODERATOR"/>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </sec:authorize>
                     </tr>
                 </table>
                 <div class="info-btns">
@@ -82,5 +90,15 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script type="text/javascript">
+    const check = function() {
+        if (document.getElementById('newPass').value !==
+            document.getElementById('confirmPass').value) {
+            document.getElementById('message').innerHTML = '<spring:message code="password.mismatch"/>';
+        } else {
+            document.getElementById('message').innerHTML = '';
+        }
+    }
+</script>
 </body>
 </html>

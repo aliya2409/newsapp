@@ -2,8 +2,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="javatime" uri="http://sargue.net/jsptags/time" %>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ page import="com.javalab.newsportal.util.Constants" %>
+<spring:message code='date.pattern' var="datePattern"/>
 <html>
 <head>
     <meta charset="utf-8">
@@ -27,7 +29,7 @@
                 <a class="news-field__brief"><spring:message code="brief"/></a>
                 <a class="news-field__content"><spring:message code="content"/></a>
                 <h6 class="news-li__title">${news.title}</h6>
-                <a class="news-li__date">${news.creationDate}</a>
+                <a class="news-li__date"><javatime:format value="${news.creationDate}" pattern="${datePattern}"/></a>
                 <a class="news-li__brief">${news.brief}</a>
                 <a class="news-li__content">${news.content}</a>
             </div>
@@ -84,7 +86,7 @@
                 <c:forEach items="${comments}" var="commentary">
                     <div class="news-comment-li">
                         <a class="comment-li-author">${commentary.author}</a>
-                        <a class="comment-li-date">${commentary.creationDate}</a>
+                        <a class="comment-li-date"><javatime:format value="${commentary.creationDate}" pattern="${datePattern}"/></a>
                         <a class="comment-li-content">${commentary.content}</a>
                         <a class="comment-li-rating"><spring:message code="rating"/> ${commentary.rating}</a>
                             <sec:authentication var="user" property="principal"/>

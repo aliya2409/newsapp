@@ -2,6 +2,7 @@ package com.javalab.newsportal.dto;
 
 import com.javalab.newsportal.model.UserRoles;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class UserDTO {
@@ -9,7 +10,7 @@ public class UserDTO {
     private String username;
     private String password;
     private String matchingPassword;
-    private Set<UserRoles> roles;
+    private Set<UserRoles> roles = new HashSet<>();
 
     public String getUsername() {
         return username;
